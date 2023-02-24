@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Estudyantipid | Home </title>
+    <link rel="stylesheet" href="style/style.css">
+    <!-- Boxiocns CDN Link / search lang boxicons sa googol -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+<body>
+  <div class="sidebar close">
+    <!--logo-->
+    <div class="logo-details">
+      <span class="logo_name"><img src="img/logo.png" class="logo"></span>
+    </div>
+
+    <!--nav-->
+    <ul class="nav-links">
+      <!--wallet-->
+      <li>
+        <a href="#">
+          <i class='bx bx-wallet' ></i>
+          <span class="link_name">Wallet</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Wallet</a></li>
+        </ul>
+      </li>
+
+      <!--record-->
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-file' ></i>
+            <span class="link_name">Record Statistics</span>
+          </a>
+        </div>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Record Statistics</a></li>
+        </ul>
+      </li>
+
+      <!--budget-->
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-credit-card' ></i>
+            <span class="link_name">Budget</span>
+          </a>
+        </div>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#" >Budget</a></li>
+        </ul>
+      </li>
+
+      <!--goals-->
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-target-lock' ></i>
+            <span class="link_name">Goals</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Goals</a></li>
+          <li><a href="#">Manage</a></li>
+          <li><a href="#">Achieved</a></li>
+        </ul>
+      </li>
+
+      <!-- planned budget-->
+      <li>
+        <div class="iocn-link">
+          <a href="#">
+            <i class='bx bx-credit-card-alt' ></i>
+            <span class="link_name">Planned Budget</span>
+          </a>
+          <i class='bx bxs-chevron-down arrow' ></i>
+        </div>
+        <ul class="sub-menu">
+          <li><a class="link_name" href="#">Planned Budget</a></li>
+          <li><a href="#">Add</a></li>
+          <li><a href="#">Manage</a></li>
+        </ul>
+      </li>
+
+      <!--profile-->
+      <li>
+        <a href="#">
+          <i class='bx bx-user' ></i>
+          <span class="link_name">Profile</span>
+        </a>
+        <ul class="sub-menu blank">
+          <li><a class="link_name" href="#">Profile</a></li>
+        </ul>
+      </li>
+
+      <!--log out-->
+      <li>
+    <div class="profile-details">
+      <div class="profile-content">
+        <img src="img/rj-profile.png" alt="profile">
+      </div>
+      <div class="name-job">
+        <div class="profile_name">RJ_ma.anniga</div>
+      </div>
+      <i class='bx bx-log-out' ></i>
+    </div>
+  </li>
+</ul>
+  </div>
+
+  <!--home-->
+  <section class="home-section">
+    <div class="home-content">
+      <i class='bx bx-menu' ></i>
+      <span class="text"></span>
+    </div>
+  </section>
+
+  <script>
+  let arrow = document.querySelectorAll(".arrow");
+  for (var i = 0; i < arrow.length; i++) {
+    arrow[i].addEventListener("click", (e)=>{
+   let arrowParent = e.target.parentElement.parentElement;//selecting main parent of arrow
+   arrowParent.classList.toggle("showMenu");
+    });
+  }
+  let sidebar = document.querySelector(".sidebar");
+  let sidebarBtn = document.querySelector(".bx-menu");
+  console.log(sidebarBtn);
+  sidebarBtn.addEventListener("click", ()=>{
+    sidebar.classList.toggle("close");
+  });
+  </script>
+</body>
+</html>
