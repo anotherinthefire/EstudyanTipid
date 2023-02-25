@@ -4,11 +4,12 @@
 <head>
   <meta charset="UTF-8">
   <title> Estudyantipid | Home </title>
-  <link rel="stylesheet" href="../style/style.css">
-  <!-- Boxiocns CDN Link / search lang boxicons sa googol -->
-  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-  <link rel="stylesheet" href="../style/profile.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <?php
+  echo '<link rel="stylesheet" href="../style/style.css">';
+  echo "<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>";
+  echo '<link rel="stylesheet" href="../style/profile.css">';
+  echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+  ?>
 </head>
 
 <body>
@@ -138,6 +139,7 @@
      </table>-->
     </div>
   </section>
+
   <table class="container">
     <tr>
       <th>
@@ -153,13 +155,48 @@
       </th>
     </tr>
     <tr class="two-button">
-      <td><button class="edit-button">Edit Profile ></button></td>
-      <td><button class="change-button">Change Password</button></td>
+      <td>
+        <button class="edit-button" id="myBtn">
+          Edit Profile >
+        </button>
+
+        <div id="myModal" class="modal">
+          <div class="modal-content">
+            <!-- <span class="closee">&times;</span> -->
+            <!-- modal content -->
+            <h1>Edit Profile</h1>
+            <div class="edit-pro">
+              <form action="profile.php">
+
+                <label for="fname">
+                  New username
+                  <span class="req">
+                    *
+                  </span>
+                </label>
+                <input type="text" id="fname" name="firstname" placeholder="">
+            </div>
+                <input type="submit" value="Submit">
+                <input class="closee" type="button" value="Discard">
+              </form>
+
+          </div>
+        </div>
+
+      </td>
+      <td>
+        <button class="change-button">
+          Change Password
+        </button>
+      </td>
     </tr>
   </table>
-  <script src="../scripts/nav.js">
+  <?php
+  echo '<script src="../scripts/nav.js"></script>
   </script>
-
+  <script src="../scripts/profile.js">
+  </script>';
+  ?>
 </body>
 
 </html>
