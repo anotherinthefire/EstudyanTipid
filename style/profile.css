@@ -156,9 +156,12 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  background: #FFFFFF;
+border: 2px solid #979797;
 }
 
-input[type="submit"],[type="button"] {
+input[type="submit"],
+[type="button"] {
   width: 40%;
   background-color: #51d289;
   color: white;
@@ -169,6 +172,7 @@ input[type="submit"],[type="button"] {
   cursor: pointer;
   display: inline;
   font-weight: bolder;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .edit-pro {
@@ -201,7 +205,6 @@ input[type="submit"],[type="button"] {
 }
 /* change-pass-form */
 .modall-content {
-  background-color: #fefefe;
   margin: auto;
   padding: 50px;
   border: 1px solid #888;
@@ -209,20 +212,24 @@ input[type="submit"],[type="button"] {
   border-radius: 10px;
   display: block;
   padding-bottom: 20px;
+  background: #ffffff;
+  box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.32);
 }
 
 /* change pass modal enter current */
-input[type="password"]{
+input[type="password"] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
-  border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  background: #FFFFFF;
+  border: 2px solid #979797;
 }
 
-input[type="submit"],[type="button"] {
+input[type="submit"],
+[type="button"] {
   width: 40%;
   background-color: #51d289;
   color: white;
@@ -232,6 +239,7 @@ input[type="submit"],[type="button"] {
   border-radius: 4px;
   cursor: pointer;
   display: inline;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 .chan-pass {
@@ -249,10 +257,10 @@ input[type="submit"],[type="button"] {
 }
 
 /* change-image */
-input[type="file"]{
-display: none;
+input[type="file"] {
+  display: none;
 }
 
-label{
+label {
   cursor: pointer;
 }

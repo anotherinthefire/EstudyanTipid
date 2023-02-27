@@ -1,4 +1,3 @@
-//////////////////////////////////////////////////////////php
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -132,23 +131,12 @@
                     <table style="width:100%">
                         <tr>
                             <th style="text-align: left;">Personal Expenses</th>
-                            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            
+                            <th>
                             </th>
                             <th style="text-align: right;">₱5000</th>
                         </tr>
                         <tr>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td style="text-align: left;"></td>
                             <td></td>
                             <td></td>
                         </tr>
@@ -208,178 +196,3 @@
 </body>
 
 </html>
-//////////////////////////////////////////////////////////////////
-/* Full-width input fields */
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-
-  background: #ffffff;
-  border: 1px solid #000000;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-}
-
-/* Add a background color when the inputs get focus */
-input[type="text"]:focus,
-input[type="password"]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-.page-title {
-  margin-left: auto;
-  margin-right: auto;
-  top: 10vh;
-  font-weight: bold;
-  text-decoration: underline;
-
-  position: absolute;
-  width: 100%;
-  text-align: center;
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 30px;
-  color: #ffffff;
-}
-
-/* Set a style for all buttons */
-.add {
-  background-color: #ffe600;
-  color: #1e1e1e;
-  padding: 15px;
-  padding-bottom: 12px;
-  padding-top: 12px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  border-radius: 15px;
-  opacity: 0.85;
-  margin-top: 170vh;
-  font-size: 18px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  right: 16px;
-}
-
-button:hover {
-  opacity: 1;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-  padding: 14px 20px;
-  float: left;
-  width: 30%;
-
-  background: #ffe600;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  margin-left: 35%;
-  margin-right: 35%;
-}
-
-/* Add padding to container elements */
-.container {
-  padding: 16px;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #1e1e1e;
-  padding-top: 50px;
-}
-
-.modal h1 {
-  text-align: center;
-}
-
-/* Modal Content/Box */
-.modal-content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%; /* Could be more or less, depending on screen size */
-  border-radius: 10px;
-  padding: 50px;
-
-  background: #ffffff;
-  box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.32);
-  border-radius: 18px;
-}
-
-/* Style the horizontal ruler */
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-/* The Close Button (x) */
-.close {
-  position: absolute;
-  right: 35px;
-  top: 15px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #f1f1f1;
-}
-
-.close:hover,
-.close:focus {
-  color: #f44336;
-  cursor: pointer;
-}
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn,
-  .signupbtn {
-    width: 100%;
-  }
-}
-
-.card {
-  margin-top: 50vh;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-img {
-  border-radius: 5px 5px 0 0;
-}
-
-.budget-details {
-  padding: 50px;
-  transition: 0.3s;
-  width: 100%;
-
-  background: #ffffff;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  align-items: center;
-  border-radius: 20px;
-
-  position: static;
-}
-.budget-details:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}

@@ -10,7 +10,8 @@
   ?>
 
   <style>
-    <?php include '../style/profile.css'; ?><?php include '../style/style.css'; ?>
+    <?php include '../style/profile.css'; ?>
+    <?php include '../style/style.css'; ?>
   </style>
 </head>
 
@@ -236,23 +237,6 @@
           </td>
         </tr>
       </table>
-
-      <!--
-      <table class="container">
-        <tr>
-            <td>
-                <img src="img/profile.jpg">
-            </td>
-            <td class="username">
-                <h1>RJ Larrab Dnanidref</h1>
-                <h6>rjsinatra.qcydoqcu@gmail.com</h6>
-                <h6>RJ_Sinatra</h6>
-            </td>
-        </tr>
-        <tr>
-            <button class="button">Edit Profile ></button>
-        </tr>
-     </table>-->
     </div>
   </section>
 
