@@ -32,14 +32,12 @@ body {
 .container {
   margin-left: auto;
   margin-right: auto;
-  margin-top: 15vh;
-  margin-bottom: 20vh;
+  margin-top: 80vh;
   background-color: white;
   padding: 30px;
   padding-left: 50px;
   padding-right: 50px;
   border-radius: 10px;
-  margin-left: 25%;
   box-shadow: 0px 2px 0px 0px #797979;
 }
 
@@ -107,7 +105,7 @@ h6 {
   text-align: center;
   height: 100%;
   border-radius: 50%;
-  padding-top: 30%;
+  padding-top: 35%;
 }
 
 .image-container img {
@@ -148,7 +146,7 @@ h6 {
   cursor: pointer;
 }
 
-/* form */
+/* edit-profile-form */
 input[type="text"],
 select {
   width: 100%;
@@ -170,6 +168,7 @@ input[type="submit"],[type="button"] {
   border-radius: 4px;
   cursor: pointer;
   display: inline;
+  font-weight: bolder;
 }
 
 .edit-pro {
@@ -185,4 +184,75 @@ input[type="submit"],[type="button"] {
 
 *:required {
   background-color: #fefefe;
+}
+/* modal master change pass */
+.modall {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 8vh; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+/* change-pass-form */
+.modall-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 50px;
+  border: 1px solid #888;
+  width: 40%;
+  border-radius: 10px;
+  display: block;
+  padding-bottom: 20px;
+}
+
+/* change pass modal enter current */
+input[type="password"]{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input[type="submit"],[type="button"] {
+  width: 40%;
+  background-color: #51d289;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline;
+}
+
+.chan-pass {
+  border-radius: 5px;
+  background-color: #fefefe;
+  padding: 20px;
+}
+
+.req {
+  color: red;
+}
+
+*:required {
+  background-color: #fefefe;
+}
+
+/* change-image */
+input[type="file"]{
+display: none;
+}
+
+label{
+  cursor: pointer;
 }

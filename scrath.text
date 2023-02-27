@@ -1,515 +1,17 @@
+http://localhost/master/EstudyanTipid/components/profile.php
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="UTF-8">
   <title> Estudyantipid | Home </title>
-  <!-- Boxiocns CDN Link / search lang boxicons sa googol -->
-  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    /* Google Fonts Import Link */
-    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Poppins", sans-serif;
-    }
-
-    /* sidebar */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 260px;
-      background: #1e1e1e;
-      z-index: 100;
-      transition: all 0.5s ease;
-    }
-
-    .sidebar.close {
-      width: 78px;
-    }
-
-    /* logo */
-    .sidebar .logo-details .logo {
-      height: 60px;
-      padding: 10px;
-      margin-top: 30px;
-      padding-left: 10%;
-      width: 90%;
-      display: flex;
-      align-items: center;
-    }
-
-    .sidebar .logo-details logo {
-      font-size: 30px;
-      color: #fff;
-      height: 50px;
-      min-width: 78px;
-      text-align: center;
-      line-height: 50px;
-    }
-
-    .sidebar .logo-details .logo_name {
-      font-size: 22px;
-      color: #fff;
-      font-weight: 600;
-      transition: 0.3s ease;
-      transition-delay: 0.1s;
-    }
-
-    .sidebar.close .logo-details .logo_name {
-      transition-delay: 0s;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* navs */
-    .sidebar .nav-links {
-      height: 100%;
-      padding: 30px 0 150px 0;
-      overflow: auto;
-    }
-
-    .sidebar.close .nav-links {
-      overflow: visible;
-    }
-
-    .sidebar .nav-links::-webkit-scrollbar {
-      display: none;
-    }
-
-    .sidebar .nav-links li {
-      position: relative;
-      list-style: none;
-      transition: all 0.4s ease;
-    }
-
-    .sidebar .nav-links li:hover {
-      background: #1e1e1e;
-    }
-
-    .sidebar .nav-links li .iocn-link {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .sidebar.close .nav-links li .iocn-link {
-      display: block;
-    }
-
-    .sidebar .nav-links li i {
-      height: 50px;
-      min-width: 78px;
-      text-align: center;
-      line-height: 50px;
-      color: #fff;
-      font-size: 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar .nav-links li i:hover {
-      color: #ffe600;
-    }
-
-    .sidebar .nav-links li.showMenu i.arrow {
-      transform: rotate(-180deg);
-    }
-
-    .sidebar.close .nav-links i.arrow {
-      display: none;
-    }
-
-    .sidebar .nav-links li a {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .sidebar .nav-links li a .link_name {
-      font-size: 18px;
-      font-weight: 400;
-      color: #fff;
-      transition: all 0.4s ease;
-    }
-
-    .sidebar .nav-links li a .link_name:hover {
-      color: #ffe600;
-    }
-
-    .sidebar.close .nav-links li a .link_name {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    /* submenu */
-    .sidebar .nav-links li .sub-menu {
-      padding: 6px 6px 14px 80px;
-      margin-top: -10px;
-      background: #1e1e1e;
-      display: none;
-    }
-
-    .sidebar .nav-links li.showMenu .sub-menu {
-      display: block;
-    }
-
-    .sidebar .nav-links li .sub-menu a {
-      color: #fff;
-      font-size: 15px;
-      padding: 5px 0;
-      white-space: nowrap;
-      opacity: 0.6;
-      transition: all 0.3s ease;
-    }
-
-    .sidebar .nav-links li .sub-menu a:hover {
-      opacity: 1;
-    }
-
-    .sidebar.close .nav-links li .sub-menu {
-      position: absolute;
-      left: 100%;
-      top: -10px;
-      margin-top: 0;
-      padding: 10px 20px;
-      border-radius: 0 6px 6px 0;
-      opacity: 0;
-      display: block;
-      pointer-events: none;
-      transition: 0s;
-    }
-
-    .sidebar.close .nav-links li:hover .sub-menu {
-      top: 0;
-      opacity: 1;
-      pointer-events: auto;
-      transition: all 0.4s ease;
-    }
-
-    .sidebar .nav-links li .sub-menu .link_name {
-      display: none;
-    }
-
-    .sidebar.close .nav-links li .sub-menu .link_name {
-      font-size: 18px;
-      opacity: 1;
-      display: block;
-    }
-
-    .sidebar .nav-links li .sub-menu.blank {
-      opacity: 1;
-      pointer-events: auto;
-      padding: 3px 20px 6px 16px;
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .sidebar .nav-links li:hover .sub-menu.blank {
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    /* profile */
-    .sidebar .profile-details {
-      position: fixed;
-      bottom: 0;
-      width: 260px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: #363636;
-      padding: 12px 0;
-      transition: all 0.5s ease;
-    }
-
-    .sidebar.close .profile-details {
-      background: none;
-    }
-
-    .sidebar.close .profile-details {
-      width: 78px;
-    }
-
-    .sidebar .profile-details .profile-content {
-      display: flex;
-      align-items: center;
-    }
-
-    .sidebar .profile-details img {
-      height: 52px;
-      width: 52px;
-      object-fit: cover;
-      border-radius: 16px;
-      margin: 0 14px 0 12px;
-      background: #363636;
-      transition: all 0.5s ease;
-    }
-
-    .sidebar.close .profile-details img {
-      padding: 10px;
-    }
-
-    .sidebar .profile-details .profile_name,
-    .sidebar .profile-details .job {
-      color: #fff;
-      font-size: 18px;
-      font-weight: 500;
-      white-space: nowrap;
-    }
-
-    .sidebar.close .profile-details i,
-    .sidebar.close .profile-details .profile_name,
-    .sidebar.close .profile-details .job {
-      display: none;
-    }
-
-    .sidebar .profile-details .job {
-      font-size: 12px;
-    }
-
-    /* home */
-    .home-section {
-      position: relative;
-      background: #51d289;
-      height: 100vh;
-      left: 260px;
-      width: calc(100% - 260px);
-      transition: all 0.5s ease;
-    }
-
-    .sidebar.close~.home-section {
-      left: 78px;
-      width: calc(100% - 78px);
-    }
-
-    .home-section .home-content {
-      height: 60px;
-      display: flex;
-      align-items: center;
-    }
-
-    .home-section .home-content .bx-menu {
-      color: #363636;
-      font-size: 35px;
-    }
-
-    .home-section .home-content .bx-menu {
-      margin: 0 15px;
-      cursor: pointer;
-    }
-
-    /*.button{
-  padding: 2px;
-  margin-top: 75%;
-  margin-left: 300px;
-  position: absolute;
-  background: #51D289;
-  border-radius: 5px;
-  border: 0px;
-}  */
-
-    @media (max-width: 400px) {
-      .sidebar.close .nav-links li .sub-menu {
-        display: none;
-      }
-
-      .sidebar {
-        width: 78px;
-      }
-
-      .sidebar.close {
-        width: 0;
-      }
-
-      .home-section {
-        left: 78px;
-        width: calc(100% - 78px);
-        z-index: 100;
-      }
-
-      .sidebar.close~.home-section {
-        width: 100%;
-        left: 0;
-      }
-    }
-
-    /* home */
-    body {
-      background-color: #51d289;
-    }
-
-    .home-section {
-      position: relative;
-      background: #51d289;
-      height: 100%;
-      left: 260px;
-      width: calc(100% - 260px);
-      transition: all 0.5s ease;
-    }
-
-    .sidebar.close~.home-section {
-      left: 78px;
-      width: calc(100% - 78px);
-    }
-
-    .home-section .home-content {
-      height: 60px;
-      display: flex;
-      align-items: center;
-    }
-
-    .home-section .home-content .bx-menu {
-      color: #363636;
-      font-size: 35px;
-    }
-
-    .home-section .home-content .bx-menu {
-      margin: 0 15px;
-      cursor: pointer;
-    }
-
-    /* profile */
-    .container {
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 15vh;
-      margin-bottom: 20vh;
-      background-color: white;
-      padding: 30px;
-      padding-left: 50px;
-      padding-right: 50px;
-      border-radius: 10px;
-      margin-left: 25%;
-      box-shadow: 0px 2px 0px 0px #797979;
-    }
-
-    .container img {
-      width: 200px;
-      border-radius: 50%;
-    }
-
-    .container h1 {
-      padding-left: 0px;
-      font-size: 40px;
-    }
-
-    .username {
-      padding-left: 10px;
-      text-align: left;
-    }
-
-    .username h5,
-    h6 {
-      font-style: normal;
-      font-weight: 400;
-      font-size: 15xpx;
-      line-height: 15px;
-    }
-
-    /* .username p{
-  font-size: 10px;
-} */
-
-    .two-button {
-      text-align: center;
-    }
-
-    .change-button,
-    .edit-button {
-      background-color: #51d289;
-      color: white;
-      border: 0px;
-      padding: 5px;
-      padding-left: 10px;
-      padding-right: 10px;
-      border-radius: 5px;
-      box-shadow: 0px 2px 0px 0px #d6d6d6;
-      margin-top: 10px;
-      cursor: pointer;
-    }
-
-    /* image icon overlay*/
-    .image-container {
-      position: relative;
-      width: 100%;
-    }
-
-    .overlay {
-      position: absolute;
-      bottom: 0;
-      background: rgb(0, 0, 0);
-      background: rgba(0, 0, 0, 0.5);
-      color: #f1f1f1;
-      width: 100%;
-      opacity: 1;
-      color: white;
-      font-size: 50px;
-      padding: 20px;
-      text-align: center;
-      height: 100%;
-      border-radius: 50%;
-      padding-top: 30%;
-    }
-
-    .image-container img {
-      display: block;
-    }
-
-    /* modal */
-    .modal {
-      display: none;
-      /* Hidden by default */
-      position: fixed;
-      /* Stay in place */
-      z-index: 1;
-      /* Sit on top */
-      padding-top: 100px;
-      /* Location of the box */
-      left: 0;
-      top: 0;
-      width: 100%;
-      /* Full width */
-      height: 100%;
-      /* Full height */
-      overflow: auto;
-      /* Enable scroll if needed */
-      background-color: rgb(0, 0, 0);
-      /* Fallback color */
-      background-color: rgba(0, 0, 0, 0.4);
-      /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-      background-color: #fefefe;
-      margin: auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
-
-    /* The Close Button */
-    .closee {
-      color: #aaaaaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .closee:hover,
-    .closee:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
+  <?php
+  echo '<link rel="stylesheet" href="../style/style.css">';
+  echo "<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>";
+  echo '<link rel="stylesheet" href="../style/profile.css">';
+  echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+  ?>
 </head>
 
 <body>
@@ -639,6 +141,7 @@
      </table>-->
     </div>
   </section>
+
   <table class="container">
     <tr>
       <th>
@@ -658,64 +161,78 @@
         <button class="edit-button" id="myBtn">
           Edit Profile >
         </button>
-
+        <!-- edit profile -->
         <div id="myModal" class="modal">
           <div class="modal-content">
-            <span class="closee">&times;</span>
-            <p>test modal</p>
+            <!-- <span class="closee">&times;</span> -->
+            <!-- modal content -->
+            <h1>Edit Profile</h1>
+            <div class="edit-pro">
+              <form action="profile.php">
+
+                <label for="fname">
+                  New username
+                  <span class="req">
+                    *
+                  </span>
+                </label>
+                <input type="text" id="fname" name="firstname" placeholder="">
+            </div>
+            <input type="submit" value="Submit">
+            <input class="closee" type="button" value="Discard">
+            </form>
+
           </div>
         </div>
 
       </td>
       <td>
-        <button class="change-button">
+        <button class="change-button" id="" myBtnn>
           Change Password
         </button>
+
+        <div id="myModall" class="modall">
+          <div class="modall-content">
+            <!-- <span class="closee">&times;</span> -->
+            <!-- modal content -->
+            <h1>Change Password</h1>
+            <p style="
+            text-align:left; 
+            ">
+              Changing your password frequently reduces the risk of your account from<br>
+              being hacked<br>
+              <br>
+              In order to protect your account, make sure your password is:<br>
+              • At least 8 - 12 character long.<br>
+              • With combination of uppercase, lowercase letters, numbers, and symbols.<br>
+              • Significantly different from your previous passwords.<br>
+            </p>
+            <div class="chan-pass>
+              <form action="profile.php">
+
+                <label for="fname">
+                  New username
+                  <span class="req">
+                    *
+                  </span>
+                </label>
+                <input type="text" id="fname" name="firstname" placeholder="">
+            </div>
+            <input type="submit" value="Submit">
+            <input class="closee" type="button" value="Discard">
+            </form>
+
+          </div>
+        </div>
       </td>
     </tr>
   </table>
-
-  <script>
-    let arrow = document.querySelectorAll(".arrow");
-    for (var i = 0; i < arrow.length; i++) {
-      arrow[i].addEventListener("click", (e) => {
-        let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-        arrowParent.classList.toggle("showMenu");
-      });
-    }
-    let sidebar = document.querySelector(".sidebar");
-    let sidebarBtn = document.querySelector(".bx-menu");
-    console.log(sidebarBtn);
-    sidebarBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("close");
-    });
-    // Get the modal
-    var modal = document.getElementById("myModal");
-
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
-
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("closee")[0];
-
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }
-    }
+  <?php
+  echo '<script src="../scripts/nav.js"></script>
   </script>
-
+  <script src="../scripts/profile.js">
+  </script>';
+  ?>
 </body>
 
 </html>

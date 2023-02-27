@@ -5,11 +5,13 @@
   <meta charset="UTF-8">
   <title> Estudyantipid | Home </title>
   <?php
-  echo '<link rel="stylesheet" href="../style/style.css">';
   echo "<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>";
-  echo '<link rel="stylesheet" href="../style/profile.css">';
   echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
   ?>
+
+  <style>
+    <?php include '../style/profile.css'; ?><?php include '../style/style.css'; ?>
+  </style>
 </head>
 
 <body>
@@ -120,6 +122,120 @@
   <section class="home-section">
     <div class="home-content">
       <i class='bx bx-menu'></i>
+      <table class="container">
+        <tr>
+          <th>
+            <div class="image-container">
+              <img src="../img/rj-profile.png" alt="Avatar">
+              <div class="overlay">
+
+                <label for="inputTag">
+                  <i class="bx bx-camera"></i>
+                  <input id="inputTag" type="file" />
+                </label>
+
+              </div>
+            </div>
+          </th>
+          <th class="username">
+            <h1>RJ Larrab Dnanidref</h1>
+            <h5>rjsinatra.qcydoqcu@gmail.com</h5>
+            <h6>RJ_ma.anniga</h6>
+          </th>
+        </tr>
+        <tr class="two-button">
+          <td>
+            <button class="edit-button" id="myBtn">
+              Edit Profile >
+            </button>
+            <!-- edit profile -->
+            <div id="myModal" class="modal">
+              <div class="modal-content">
+                <!-- <span class="closee">&times;</span> -->
+                <!-- modal content -->
+                <h1>Edit Profile</h1>
+                <div class="edit-pro">
+                  <form action="profile.php">
+
+                    <label for="fname">
+                      New username
+                      <span class="req">
+                        *
+                      </span>
+                    </label>
+                    <input type="text" id="fname" name="firstname" placeholder="">
+                </div>
+                <input type="submit" value="Submit">
+                <input class="closee" type="button" value="Discard">
+                </form>
+
+              </div>
+            </div>
+
+          </td>
+          <td>
+            <button class="change-button" id="myBtnn">
+              Change Password
+            </button>
+
+            <div id="myModall" class="modall">
+              <div class="modall-content">
+                <!-- <span class="closee">&times;</span> -->
+                <!-- modal content -->
+                <h1>Change Password</h1>
+                <p style="
+                    text-align:left; 
+                    font-size:13px;
+                    padding-top:25px;
+                    padding-bottom:25px;
+                    ">
+                  Changing your password frequently reduces the risk of your account from
+                  being hacked<br>
+                  <br>
+                  In order to protect your account, make sure your password is:<br>
+                  &nbsp;• At least 8 - 12 character long.<br>
+                  &nbsp;• With combination of uppercase, lowercase letters, numbers, and symbols.<br>
+                  &nbsp;• Significantly different from your previous passwords.<br>
+                </p>
+
+                <form action=" profile.php">
+                  <div class="chan-pass>
+                <label for=" old-passowrd" style="
+                    text-align:left;
+                ">
+                    Old password
+                    <span class="req">
+                      *
+                    </span>
+                    </label>
+                    <input type="password" id="old-password" name="oldpassword" placeholder="">
+
+                    <label for="new-passowrd">
+                      New password
+                      <span class="req">
+                        *
+                      </span>
+                    </label>
+                    <input type="password" id="new-password" name="newpassword" placeholder="">
+
+                    <label for="new-passowrd">
+                      Confirm new password
+                      <span class="req">
+                        *
+                      </span>
+                    </label>
+                    <input type="password" id="confirm-new-password" name="connewpassword" placeholder="">
+                  </div>
+
+                  <input type="submit" value="Change">
+                  <input class="closeee" type="button" value="Discard">
+                </form>
+
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
 
       <!--
       <table class="container">
@@ -140,63 +256,16 @@
     </div>
   </section>
 
-  <table class="container">
-    <tr>
-      <th>
-        <div class="image-container">
-          <img src="../img/rj-profile.png" alt="Avatar">
-          <div class="overlay"><i class='bx bx-camera'></i></div>
-        </div>
-      </th>
-      <th class="username">
-        <h1>RJ Larrab Dnanidref</h1>
-        <h5>rjsinatra.qcydoqcu@gmail.com</h5>
-        <h6>RJ_ma.anniga</h6>
-      </th>
-    </tr>
-    <tr class="two-button">
-      <td>
-        <button class="edit-button" id="myBtn">
-          Edit Profile >
-        </button>
 
-        <div id="myModal" class="modal">
-          <div class="modal-content">
-            <!-- <span class="closee">&times;</span> -->
-            <!-- modal content -->
-            <h1>Edit Profile</h1>
-            <div class="edit-pro">
-              <form action="profile.php">
-
-                <label for="fname">
-                  New username
-                  <span class="req">
-                    *
-                  </span>
-                </label>
-                <input type="text" id="fname" name="firstname" placeholder="">
-            </div>
-                <input type="submit" value="Submit">
-                <input class="closee" type="button" value="Discard">
-              </form>
-
-          </div>
-        </div>
-
-      </td>
-      <td>
-        <button class="change-button">
-          Change Password
-        </button>
-      </td>
-    </tr>
-  </table>
   <?php
   echo '<script src="../scripts/nav.js"></script>
-  </script>
-  <script src="../scripts/profile.js">
+  </script>';
+  echo '<script src="../scripts/profile.js">
   </script>';
   ?>
+  <script>
+    <?php include '../scripts/profile.js'; ?>
+  </script>
 </body>
 
 </html>
