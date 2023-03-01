@@ -9,8 +9,7 @@
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
     <style>
-        <?php include '../style/goal.css'; ?>
-        <?php include '../style/style.css'; ?>
+        <?php include '../style/rec-stats.css'; ?><?php include '../style/style.css'; ?>
     </style>
 </head>
 
@@ -123,7 +122,30 @@
     <section class="home-section">
         <div class="home-content">
             <i class='bx bx-menu'></i>
-            <h1 class="page-title">GOALS</h1>
+
+            <button onclick="show_hide()" class="sort">
+                <i class='bx bx-chevron-down' style="margin-right:5px;"></i>
+                Sort by
+                <i class='bx bx-filter-alt' style="margin-left:5px;"></i>
+            </button>
+
+            <!-- dropdown list items will show when we click the drop button -->
+            <div id="list-items">
+                <ul>
+                    <li>date</li>
+                    <li>amount</li>
+                </ul>
+            </div>
+            <!-- search -->
+            <div class="wrap">
+                <div class="search">
+                    <button type="submit" class="searchButton">
+                        <i class='bx bx-search-alt-2'></i>
+                    </button>
+                    <input type="text" class="searchTerm" placeholder="niggagawa mue">
+                </div>
+            </div>
+
             <br>
             <div class="card">
                 <div class="budget-details">
@@ -156,40 +178,16 @@
                     </table>
                 </div>
             </div>
-            <button class="add" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">
-                <b>+ Add Goal</b>
-            </button>
-            <div id="id01" class="modal">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-
-                <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
-                    <div class="container">
-                        <h1>Budget Details</h1>
-                        <hr>
-                        <label for="tilt"><b>Title of Budget</b></label>
-                        <input type="text" placeholder="" name="tilt" required>
-                        <label for="bud"><b>Enter Budget</b></label>
-                        <input type="number" placeholder="0PHP" name="bud" required>
-
-                        <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
-                        <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
-                        <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
-                        </div>
-                    </div>
-                </form>
-            </div>
         </div>
     </section>
     <?php
     echo '<script src="../scripts/nav.js"></script>
   </script>';
-    echo '<script src="../scripts/goal.js">
+    echo '<script src="../scripts/rec-stats.js">
   </script>';
     ?>
     <script>
-        <?php include '../scripts/goal.js'; ?>
+        <?php include '../scripts/rec-stats.js'; ?>
     </script>
 </body>
 

@@ -14,9 +14,8 @@
   height: 100%;
   width: 260px;
   background: #1e1e1e;
-  z-index: 100;
   transition: all 0.5s ease;
-  z-index: 0;
+  z-index: 100;
 
 }
 .sidebar.close {
@@ -234,7 +233,7 @@
 
 /* home */
 .home-section {
-  position: relative;
+  position: absolute;
   background: #51d289;
   height: 100vh;
   left: 260px;
