@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+.back1{
+    position: absolute;
+    left: 0;
+    width: 55%;
+    height:100%;
+    background: #51D289;
+    display: flex;
+    align-items: center;
+}
+.back2{
+    position: absolute;
+    right: 0;
+    width: 45%;
+    height: 100%;
+    background: white;
+    display: flex;
+    align-items: center;
+}
+.back2 img{
+    position: absolute;
+    margin-left:25%;
+}
+.box{
+    
+
+    width:600px;
+    height:743px;
+    
+    background-color: #1E1E1E;
+    border-radius: 5%;
+    }

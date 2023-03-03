@@ -112,7 +112,10 @@
                     <div class="name-job">
                         <div class="profile_name">RJ.amigo</div>
                     </div>
+                    <a href="../login/Login.php">
                     <i class='bx bx-log-out'></i>
+                </a>
+
                 </div>
             </li>
         </ul>

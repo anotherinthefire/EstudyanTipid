@@ -1,3 +1,9 @@
+<?php
+include_once('config.php');
+$query = "SELECT * FROM `goal`;";
+$result = mysqli_query($conn, $query);
+?>
+
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -126,40 +132,49 @@
             <br>
             <div class="card">
                 <div class="budget-details">
-                    <table style="width:100%">
-                        <tr>
-                            <th style="text-align: left; font-weight: normal;">
-                                GeForce RTX 3060
-                            </th>
+                    <?php
+                if (mysqli_num_rows($result) > 0) {
+                echo'<table style="width:100%">';
+                while($row = mysqli_fetch_assoc($result)) {        
+                echo'<tr><th style="text-align: left; font-weight: normal;">'
+                . $row["gtitle"] .
+                            '</th>
                             <th style="text-align: center; font-weight: normal;">
-
                             </th>
                             <th style="text-align: right; font-weight: normal;">
-                                <span style="color:#FF0000; padding-right:10px;">Goal Date:</span>
-                                2023-02-28
-                            </th>
+                                <span style="color:#FF0000; padding-right:10px;">Goal Date:</span>'
+                                . $row["gddate"] .
+                            '</th>
                         </tr>
                         <tr>
-                            <td style="padding-top:20px; "></td>
+                            <td style="padding-top:20px; ">
+                            </td>
                             <td></td>
                             <td></td>
                         </tr>
                         <tr>
                             <td style="text-align: left;">
-                                ₱2000
                                 <span style="color:#17CF26; padding-left:10px;">
-                                    Current Balance
+                                    ACHIEVED
                                 </span>
                             </td>
                             <td></td>
                             <td style="text-align: right;">
                                 <span style="color:#17CF26; padding-right:10px">
                                     Goal Item Price:
-                                </span>
-                                ₱60,000
+                                </span>'
+                                . $row["gtamount"] . '
                             </td>
-                        </tr>
-                    </table>
+                        </tr>';
+                    }
+                    echo "</table>";
+                } else {
+                    echo "No data found";
+                }
+                
+                // Close the database connection
+
+                ?>
                 </div>
             </div>
             <button class="add" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">
@@ -169,7 +184,7 @@
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
                 <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
+                <form class="modal-content" action="/action_page.php" method="get">
                     <div class="container">
                         <h1>Goals</h1>
                         <hr>
