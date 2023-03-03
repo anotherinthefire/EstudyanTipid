@@ -9,8 +9,7 @@
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
     <style>
-        <?php include '../style/budget.css'; ?>
-        <?php include '../style/style.css'; ?>
+        <?php include '../style/budget.css'; ?><?php include '../style/style.css'; ?>
     </style>
 </head>
 
@@ -167,11 +166,26 @@
                     <div class="container">
                         <h1>Budget Details</h1>
                         <hr>
-                        <label for="tilt"><b>Title of Budget</b></label>
+
+                        <label for="tilt">
+                            <b>Title of Budget</b>
+                        </label>
                         <input type="text" placeholder="" name="tilt" required>
-                        <label for="bud"><b>Enter Budget</b></label>
+
+                        <label for="bud">
+                            <b>Enter Budget</b>
+                        </label>
                         <input type="number" placeholder="0PHP" name="bud" required>
 
+                        <label for="period">
+                            <b>Period</b>
+                        </label>
+                        <br>
+                        <select name="period" id="period" class="period">
+                            <option id="day">day</option>
+                            <option id="week">week</option>
+                            <option id="month">month</option>
+                        </select>
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
                         <div class="clearfix">

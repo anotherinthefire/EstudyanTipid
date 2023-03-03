@@ -211,6 +211,9 @@
                     </span>
                     </label>
                     <input type="password" id="old-password" name="oldpassword" placeholder="">
+                    <input type="checkbox" onclick="myFunction()">
+                    <span style="font-size:15px;">Show Password</span>
+                    <br>
 
                     <label for="new-passowrd">
                       New password

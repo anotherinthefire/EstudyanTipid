@@ -93,7 +93,7 @@
   transition: all 0.3s ease;
 }
 
-.sidebar .nav-links li i:hover {
+.sidebar .nav-links li i:hover:active {
   color: #ffe600;
 }
 

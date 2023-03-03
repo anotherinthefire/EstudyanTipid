@@ -51,48 +51,33 @@
   display: block;
 }
 /* set the size and position of button on web */
-.sort {
-  background: #ffffff;
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25),
-    inset 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 8px;
+#sort {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  display: inline-block;
+  position: inherit;
+  margin-left: 5vw;
 
-  padding: 7px 22px;
-  font-size: 15px;
-  border: 2px;
-  position: absolute;
-  top: 6vh;
-  left: 19vh;
-  z-index: 1;
+  /* border-width:2px;
+    border-style:solid;
+    border: 2px solid rgb(0, 60, 255); */
 }
 
-/* provide css to background of list items */
-#list-items {
-  display: none;
-  position: absolute;
-  background-color: white;
-  width: 148px;
-  z-index: 2;
-  top: 9vh;
-  left: 19vh;
-
-  padding-top: 19px;
-}
-/* provide css to list items */
-#list-items a {
-  position: relative;
-  display: block;
-  font-size: 15px;
-  background-color: #ffffff;
-  color: black;
-  text-decoration: none;
-  padding: 10px;
+#history {
   text-align: center;
-}
-
-#list-items ul {
-  list-style: none;
-  padding-left: 5px;
+  width: 30vh;
+  border-right: none;
+  padding: 5px;
+  height: 20px;
+  top: 5.5vh;
+  outline: none;
+  color: #000000;
+  height: 36.5px;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+  inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  position: absolute;
 }
 
 /* search */
@@ -109,11 +94,12 @@
   padding: 5px;
   height: 20px;
   outline: none;
-  color: #9dbfaf;
+  color: #000000;
   height: 36.5px;
 
-  background: #FFFFFF;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 4px 4px 4px rgba(0, 0, 0, 0.25);
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+  inset 4px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 0px 8px 8px 0px;
 }
 
@@ -124,8 +110,8 @@
   color: #fff;
   cursor: pointer;
   font-size: 20px;
-  background: #1E1E1E;
-border-radius: 8px 0px 0px 8px;
+  background: #1e1e1e;
+  border-radius: 8px 0px 0px 8px;
 }
 
 /*Resize the wrap to see the search bar change!*/

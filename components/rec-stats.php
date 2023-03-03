@@ -123,18 +123,15 @@
         <div class="home-content">
             <i class='bx bx-menu'></i>
 
-            <button onclick="show_hide()" class="sort">
-                <i class='bx bx-chevron-down' style="margin-right:5px;"></i>
-                Sort by
-                <i class='bx bx-filter-alt' style="margin-left:5px;"></i>
-            </button>
+            <div class="col-xs-6" id="sort">
+                <select name="history" id="history">
+                    <option>--sort by--</option>
+                    <option id="date">date</option>
+                    <option id="budget">budget</option>
+                    <option id="expenses">expenses</option>
+                    <option id="income">income</option>
+                </select>
 
-            <!-- dropdown list items will show when we click the drop button -->
-            <div id="list-items">
-                <ul>
-                    <li>date</li>
-                    <li>amount</li>
-                </ul>
             </div>
             <!-- search -->
             <div class="wrap">

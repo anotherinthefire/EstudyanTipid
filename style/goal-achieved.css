@@ -1,0 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+
+.page-title {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+    font-weight: bold;
+    text-decoration: underline;
+  
+    text-align: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    color: #ffffff;
+  }
+/* cards */
+.card {
+  position: absolute;
+  margin-top: 100vh;
+  margin-left: 10vh;
+  margin-right: auto;
+
+  width: 90%;
+  height: 80vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+
+  display: block;
+}
+
+.budget-details {
+  padding: 30px;
+  padding-left: 5%;
+  padding-right: 5%;
+  transition: 0.3s;
+  width: 90%;
+  font-size: large;
+
+  background: #ffffff;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  align-items: center;
+  border-radius: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+
+  position: static;
+}
+.budget-details:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}

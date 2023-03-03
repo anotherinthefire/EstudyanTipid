@@ -1,8 +1,22 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 /* Full-width input fields */
 input[type="text"],
-input[type="number"] {
+input[type="number"]{
   width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+
+  background: #ffffff;
+  border: 1px solid #000000;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.period {
+  width: 30%;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
@@ -17,7 +31,8 @@ input[type="number"] {
 
 /* Add a background color when the inputs get focus */
 input[type="text"]:focus,
-input[type="number"]:focus {
+input[type="number"]:focus,
+.period:focus {
   background-color: #ddd;
   outline: none;
 }
@@ -109,6 +124,8 @@ button:hover {
   box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.32);
   border-radius: 18px;
 }
+
+
 
 /* Style the horizontal ruler */
 hr {

@@ -9,8 +9,7 @@
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
     <style>
-        <?php include '../style/goal.css'; ?>
-        <?php include '../style/style.css'; ?>
+        <?php include '../style/goal.css'; ?><?php include '../style/style.css'; ?>
     </style>
 </head>
 
@@ -130,13 +129,14 @@
                     <table style="width:100%">
                         <tr>
                             <th style="text-align: left; font-weight: normal;">
-                                Personal Expenses
+                                GeForce RTX 3060
                             </th>
                             <th style="text-align: center; font-weight: normal;">
-                                As of (Date)
+
                             </th>
                             <th style="text-align: right; font-weight: normal;">
-                                ₱5000
+                                <span style="color:#FF0000; padding-right:10px;">Goal Date:</span>
+                                2023-02-28
                             </th>
                         </tr>
                         <tr>
@@ -146,11 +146,17 @@
                         </tr>
                         <tr>
                             <td style="text-align: left;">
-                                ₱4000<span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
+                                ₱2000
+                                <span style="color:#17CF26; padding-left:10px;">
+                                    Current Balance
+                                </span>
                             </td>
                             <td></td>
                             <td style="text-align: right;">
-                                <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱1000
+                                <span style="color:#17CF26; padding-right:10px">
+                                    Goal Item Price:
+                                </span>
+                                ₱60,000
                             </td>
                         </tr>
                     </table>
@@ -165,12 +171,22 @@
                 <!-- modal content -->
                 <form class="modal-content" action="/action_page.php">
                     <div class="container">
-                        <h1>Budget Details</h1>
+                        <h1>Goals</h1>
                         <hr>
-                        <label for="tilt"><b>Title of Budget</b></label>
+                        <label for="tilt">
+                            <b>Title of Goal</b>
+                        </label>
                         <input type="text" placeholder="" name="tilt" required>
-                        <label for="bud"><b>Enter Budget</b></label>
+                        <label for="bud">
+                            <b>Amount</b>
+                        </label>
                         <input type="number" placeholder="0PHP" name="bud" required>
+
+                        <label for="gdate">
+                            <b>Goal Date:</b>
+                            <br>
+                        </label>
+                        <input type="date" id="gdate" name="gdate">
 
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->

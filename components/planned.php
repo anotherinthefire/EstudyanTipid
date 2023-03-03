@@ -9,8 +9,7 @@
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
     <style>
-        <?php include '../style/planned.css'; ?>
-        <?php include '../style/style.css'; ?>
+        <?php include '../style/planned.css'; ?><?php include '../style/style.css'; ?>
     </style>
 </head>
 
@@ -130,34 +129,49 @@
                     <table style="width:100%">
                         <tr>
                             <th style="text-align: left; font-weight: normal;">
-                                Personal Expenses
+                                Networking102 Cisco Premium
                             </th>
                             <th style="text-align: center; font-weight: normal;">
-                                As of (Date)
+
                             </th>
                             <th style="text-align: right; font-weight: normal;">
+                                <span style="color:#FF0000; padding-left:10px;">
+                                    Plan Due Date:
+                                </span>
                                 ₱5000
                             </th>
                         </tr>
                         <tr>
                             <td style="padding-top:20px; "></td>
                             <td></td>
-                            <td></td>
+                            <td style="text-align: right; font-weight: normal;">
+                                <span style="color:#17CF26; padding-right:10px;">
+                                    Item Price:
+                                </span>
+                                ₱100
+                            </td>
                         </tr>
                         <tr>
                             <td style="text-align: left;">
-                                ₱4000<span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
+                                <span style="color:#FF0000; padding-left:10px;">
+                                    On-Going
+                                </span>
                             </td>
-                            <td></td>
+                            <td>
+
+                            </td>
                             <td style="text-align: right;">
-                                <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱1000
+                                <span style="color:#FF0000; padding-right:10px">
+                                    Payee:
+                                </span>
+                                John Doe
                             </td>
                         </tr>
                     </table>
                 </div>
             </div>
             <button class="add" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">
-                <b>+ Add Goal</b>
+                <b>+ Add Payment</b>
             </button>
             <div id="id01" class="modal">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
@@ -165,13 +179,28 @@
                 <!-- modal content -->
                 <form class="modal-content" action="/action_page.php">
                     <div class="container">
-                        <h1>Budget Details</h1>
+                        <h1>Plan a Paymentt</h1>
                         <hr>
-                        <label for="tilt"><b>Title of Budget</b></label>
+                        <label for="tilt">
+                            <b>Title of Plan</b>
+                        </label>
                         <input type="text" placeholder="" name="tilt" required>
-                        <label for="bud"><b>Enter Budget</b></label>
+
+                        <label for="bud">
+                            <b>Enter Budget</b>
+                        </label>
                         <input type="number" placeholder="0PHP" name="bud" required>
 
+                        <label for="tilt">
+                            <b>Payee</b>
+                        </label>
+                        <input type="text" placeholder="" name="tilt" required>
+
+                        <label for="due">
+                            <b>Plan Due Date</b>
+                        </label>
+                        <br>
+                        <input type="date" id="due" name="due">
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
                         <div class="clearfix">
