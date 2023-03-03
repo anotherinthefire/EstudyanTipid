@@ -18,7 +18,7 @@ btnn.onclick = function() {
   modall.style.display = "block";
 }
 
-// When the user clicks on <span> (x), close the modal
+
 span.onclick = function() {
   modal.style.display = "none";
 }
@@ -26,11 +26,19 @@ spann.onclick = function() {
   modall.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal || event.target == modall) {
     modal.style.display = "none";
     modall.style.display = "none";
+  }
+}
+
+function myFunction() {
+  var x = document.getElementById("old-password");
+  if (x.type === "password") {
+    x.type = "text";
+  } else {
+    x.type = "password";
   }
 }
 
