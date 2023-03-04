@@ -10,8 +10,7 @@
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
     <style>
-        <?php include '../style/planned-manage.css'; ?>
-        <?php include '../style/style.css'; ?>
+        <?php include '../style/planned-manage.css'; ?><?php include '../style/style.css'; ?>
     </style>
 </head>
 
@@ -128,7 +127,7 @@
             <br>
             <div class="card">
                 <div class="budget-details">
-                <table style="width:100%">
+                    <table style="width:100%">
                         <tr>
                             <th style="text-align: left; font-weight: normal;">
                                 Networking102 Cisco Premium
@@ -143,7 +142,7 @@
                                 ₱5000
                             </th>
                             <th>
-                                <i class='bx bx-edit' class="edit" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"</i>
+                                <i class='bx bx-check' onclick="document.getElementById('stat').style.display='block'" style="width:auto;"></i>
                             </th>
                         </tr>
                         <tr>
@@ -156,7 +155,8 @@
                                 ₱100
                             </td>
                             <td style="text-align: center;">
-                            <i class='bx bx-trash' onclick="document.getElementById('del').style.display='block'" style="width:auto;"></i>
+
+                                <i class='bx bx-edit' class="edit" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"></i></i>
                             </td>
                         </tr>
                         <tr>
@@ -173,8 +173,11 @@
                                     Payee:
                                 </span>
                                 John Doe
-                            </td>                       
-                    </tr>
+                            </td>
+                            <td style="text-align: center;">
+                                <i class='bx bx-trash' onclick="document.getElementById('del').style.display='block'" style="width:auto;"></i>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
@@ -208,12 +211,20 @@
                         </label>
                         <br>
                         <input type="date" id="due" name="due">
-                        <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
-                        <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
+
+                        <label for="status">
+                            <b>Status</b>
+                        </label>
+                        <br>
+                        <select name="status" id="status" class="stat">
+                            <option id="not-done">NOT DONE</option>
+                            <option id="paid">PAID</option></option>
+                        </select>
+
                         <div class="clearfix">
                             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
-                            <b>Edit</b>
-                        </button>
+                                <b>Edit</b>
+                            </button>
                         </div>
                     </div>
                 </form>
@@ -230,19 +241,39 @@
                             Delete Payment?
                         </h1>
                         <hr>
-                        
+
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
                         <div class="clearfix">
                             <button type="button" onclick="document.getElementById('del').style.display='none'" class="cancelbtn">
-                            <b>DELETE</b>
-                        </button>
+                                <b>DELETE</b>
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
 
+<!-- change status -->
+            <!-- delete modal -->
+            <div id="stat" class="stat-modal">
+                <span onclick="document.getElementById('stat').style.display='none'" class="close" title="Close Modal">&times;</span>
 
+                <!-- modal content -->
+                <form class="modal-content" action="">
+                    <div class="container">
+                        <h1>
+                            Payment Done?
+                        </h1>
+                        <hr>
+
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('stat').style.display='none'" class="cancelbtn">
+                                <b>Yes</b>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
 
         </div>

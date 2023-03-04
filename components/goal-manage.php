@@ -10,8 +10,7 @@
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
     <style>
-        <?php include '../style/goal-manage.css'; ?>
-        <?php include '../style/style.css'; ?>
+        <?php include '../style/goal-manage.css'; ?><?php include '../style/style.css'; ?>
     </style>
 </head>
 
@@ -128,9 +127,9 @@
             <br>
             <div class="card">
                 <div class="budget-details">
-                <table style="width:100%">
+                    <table style="width:100%">
                         <tr>
-                        <th style="text-align: left; font-weight: normal;">
+                            <th style="text-align: left; font-weight: normal;">
                                 GeForce RTX 3060
                             </th>
                             <th style="text-align: center; font-weight: normal;">
@@ -141,19 +140,21 @@
                                 2023-02-28
                             </th>
                             <th>
-                                <i class='bx bx-edit' class="edit" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"</i>
+                                <i class='bx bx-check' onclick="document.getElementById('stat').style.display='block'" style="width:auto;"></i>
                             </th>
                         </tr>
+
                         <tr>
-                        <td style="padding-top:20px; "></td>
+                            <td style="padding-top:20px; "></td>
                             <td></td>
                             <td></td>
-                            <td style="text-align: center;">
-                            <i class='bx bx-trash' onclick="document.getElementById('del').style.display='block'" style="width:auto;"></i>
+                            <td style="text-align: center">
+                                <i class='bx bx-edit' class="edit" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"></i> </i>
                             </td>
                         </tr>
+
                         <tr>
-                        <td style="text-align: left;">
+                            <td style="text-align: left;">
                                 ₱2000
                                 <span style="color:#17CF26; padding-left:10px;">
                                     Current Balance
@@ -165,18 +166,21 @@
                                     Goal Item Price:
                                 </span>
                                 ₱60,000
-                            </td>     
-                    </tr>
+                            </td>
+                            <td style="text-align: center;">
+                                <i class='bx bx-trash' onclick="document.getElementById('del').style.display='block'" style="width:auto;"></i>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
-            
 
+            <!-- edit -->
             <div id="id01" class="modal">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
                 <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
+                <form class="modal-content" action="">
                     <div class="container">
                         <h1>Edit</h1>
                         <hr>
@@ -190,41 +194,72 @@
                         <input type="number" placeholder="0PHP" name="bud" required>
 
                         <label for="gdate">
-                            <b>Goal Date:</b>
+                            <b>Goal Date</b>
                             <br>
                         </label>
                         <input type="date" id="gdate" name="gdate">
+                        <br>
+                        <label for="status">
+                            <b>Status</b>
+                        </label>
+                        <br>
+                        <select name="status" id="status" class="stat">
+                            <option id="goal">GOAL</option>
+                            <option id="achieved">ACHIEVED</option>
+                        </select>
 
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
                         <div class="clearfix">
                             <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
-                            <b>Edit</b>
-                        </button>
+                                <b>Edit</b>
+                            </button>
                         </div>
                     </div>
                 </form>
             </div>
 
 
-
+            <!-- delete modal -->
             <div id="del" class="del-modal">
                 <span onclick="document.getElementById('del').style.display='none'" class="close" title="Close Modal">&times;</span>
 
                 <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
+                <form class="modal-content" action="">
                     <div class="container">
                         <h1>
                             Delete Goal?
                         </h1>
                         <hr>
-                        
+
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
                         <div class="clearfix">
                             <button type="button" onclick="document.getElementById('del').style.display='none'" class="cancelbtn">
-                            <b>DELETE</b>
-                        </button>
+                                <b>DELETE</b>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- change status -->
+            <!-- delete modal -->
+            <div id="stat" class="stat-modal">
+                <span onclick="document.getElementById('stat').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                <!-- modal content -->
+                <form class="modal-content" action="">
+                    <div class="container">
+                        <h1>
+                            Goal Achieved?
+                        </h1>
+                        <hr>
+
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('stat').style.display='none'" class="cancelbtn">
+                                <b>YES</b>
+                            </button>
                         </div>
                     </div>
                 </form>

@@ -5,14 +5,15 @@ include_once('../components/config.php');
 if(isset($_POST['login'])) {
     $login = $_POST['login'];
     $password = $_POST['password'];
-    $query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login') AND password = '$password'";
+    //$query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login') AND password = '$password'";
+    $query = "SELECT * FROM user WHERE password = '$password'";
     $result = mysqli_query($conn, $query);
     
     if(mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
         $_SESSION['userid'] = $user['userid'];
         $_SESSION['username'] = $user['username'];
-        header('Location: ../componens/profile.php');
+        header('Location: ../components/profile.php');
         exit;
     } else {
 
@@ -74,7 +75,7 @@ if(isset($_POST['login'])) {
         } ?>
 
       <div class="text-end mx-5">
-        <a href="forgot.html" class="text-light">Forgot password?</a>
+        <a href="forgot.php" class="text-light">Forgot password?</a>
       </div>
 
       <div class="d-grid gap-2 mb-3 ms-5 me-5 mt-3">

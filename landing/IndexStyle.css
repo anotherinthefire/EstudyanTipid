@@ -1,0 +1,419 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+/* Navbar Design */
+
+a {
+    text-decoration: none;
+    color: rgba(34, 54, 69, 7);
+    
+    font-weight: 50;
+    font-size: 25px;
+    
+}
+
+a:hover{
+    color: green;  
+  }
+
+.li:hover{
+    color: green;
+}
+
+.navbar {
+    width: 100%;
+    height: 100%;
+    left: 1px;
+    top: 0px;
+    position: fixed;
+    background: white;
+    height: 0rem;
+    min-height: 10vh;
+}
+
+.navbar-brand img{
+    width: 100%;
+    height: 100%;
+    
+}
+
+.navbar-expand-lg .navbar-nav .nav-link:hover{
+    border-bottom: 4px solid green;
+}
+
+.navbar-expand-lg .navbar-nav .nav-link:active{
+    border-top: 4px solid green;
+    color: green;
+}
+
+.navbar-nav .btn{
+    background-color: green;
+    color: white;
+} 
+/* Navbar Design End */
+
+/* Home */
+
+#home {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    padding-top: 100px;
+  }
+
+#home img {
+    width: 100%;
+    height: auto;
+    height: 80vh;
+    border-radius: 25px;
+  }
+
+  #home .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-300%, 220%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #51D289;
+    color: white;
+    font-size: 20px;
+    font-family: "poppins";
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 30px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  #home .btn:hover {
+    color: #1E1E1E
+  }
+
+/* End of Home */
+
+/* Start of Features */
+#hero-carousel{
+    height: 88vh;
+
+}
+.c-item{
+    
+    height: 88vh;
+    
+}
+
+.c-img{
+    padding-top: 100px;
+    padding-left: 100px;
+    padding-right: 100px;
+    height: 88vh;
+    object-fit: fill;
+    filter: brightness(0.9);
+    border-radius: 10px;
+
+}
+
+/* End of Features */
+
+/* Start of Faqs */
+
+/* #faqs{
+	height: 50vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+
+
+.accordion-button{
+    border: 0;
+    background-color: white;
+    font-size: 25px;
+}
+
+.accordion-body{
+    border-style: solid;
+    border-width: 0.5px;
+    border-radius: 10px;
+    padding-left: 2rem;
+    font-size: 20px;
+} */
+
+/* End of Faqs */
+
+/* Start Contact */
+#contact_us{
+	height: 80vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-area {
+	padding-top: 0;
+}
+.row.single-form {
+	box-shadow: 0 2px 20px -5px rgba(0,0,0,0.5);
+}
+.left {
+	background: #51D289;
+	padding: 200px 98px;
+}
+.left h2 {
+	font-family: poppins;
+	color: #fff;
+	font-weight: 700;
+	font-size: 48px;
+}
+.left h2 span {
+	font-weight: 100;
+}
+.single-form{
+    background: #fff;
+}
+.right {
+	padding: 70px 100px;
+	position: relative;
+}
+.right i {
+	position: absolute;
+	font-size: 80px;
+	left: -27px;
+	top: 40%;
+	color: #fff;
+}
+.form-control {
+	border: 2px solid #000;
+}
+.right button {
+	border: none;
+	border-radius: 0;
+	background: #252525;
+	width: 180px;
+	color: #fff;
+	padding: 15px 0;
+	display: inline-block;
+	font-size: 16px;
+	margin-top: 20px;
+	cursor: pointer;
+}
+.right button:hover{
+    background-color: #252525;
+}
+/* End of Contact */
+
+/* Start of About Us */
+
+#about_us{
+	/*vh stands for viewport height*/
+	height: 40vh;
+	/*center the content vertically using flexbox*/
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+    background-color: #1e1e1e;
+}
+
+.aboutpic {
+    width: 8%;
+    height: 15%;
+}
+
+h4{
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+
+#about_us #ap1{
+    padding-left: 25px;
+    padding-right: 25px;
+    text-align: justify;
+    color: white;
+    font-size: 15px;
+}
+
+#about_us #ap2{
+    padding-left: 25px;
+    padding-right: 25px;
+    text-align: justify;
+    color: white;
+    font-size: 15px;
+}
+
+/* End of About Us */
+
+html, body{
+    font-family: 'Poppins';
+    font-size: 15px;
+    line-height: 1.5;
+    box-sizing: border-box;
+    margin: 0;
+    overflow-x: hidden;
+    top: 0;
+    left: 0;
+    scroll-behavior: smooth;
+}
+
+/* Media Queries 700px */
+@media screen and (max-width:700px){
+    
+    /* Navbar Media Start */
+
+    .navbar-brand img{
+        width: 100%;
+        height: 40px;
+    }
+
+    a {
+        text-decoration: none;
+        color: rgba(34, 54, 69, 7);
+        font-weight: 500;
+        font-size: 20;
+    }
+
+    /* Navbar Media End */
+
+    /* Home Media Start */
+
+    #home {
+        position: relative;
+        padding-top: 90px;
+        width: 100%;
+        height: 33vh;
+      }
+    
+    #home img {
+        width: 100%;
+        height: auto;
+        height: 35vh;
+      }
+    
+      #home .btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-130%, 290%);
+        -ms-transform: translate(-50%, -50%);
+        background-color: #51D289;
+        color: white;
+        font-size: 10px;
+        padding: 12px 24px;
+        border: none;
+        cursor: pointer;
+        border-radius: 30px;
+        text-align: center;
+        font-weight: bold;
+      }
+      
+      #home .btn:hover {
+        color: #1E1E1E
+      }
+
+      /* Home Media End */
+
+      /* Features Start */
+      #hero-carousel{
+        height: 57vh;
+      }
+      .c-item{
+        height: 55vh;
+        
+      }
+      .c-img{
+        padding-top: 100px;
+        padding-left: 0;
+        padding-right: 0;
+        width: 100%;
+        height: 55vh;
+        object-fit: fill;
+      }
+      .carousel-caption{
+        font-size: 10px;
+      }
+
+      /* Features End */
+
+      /* Contact Us Start */
+
+      #contact_us{
+        height: 40vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    @media (max-width:767px){
+    
+    
+    .form-area{
+        padding-top: 0px;
+    }
+    .left {
+      padding: 50px 15px;
+      text-align: center;
+    }
+    .left h2 {
+      font-size: 25px;
+    }
+    .right {
+      padding: 25px ;
+    }
+    .right i {
+      top: -52px;
+      transform: rotate(90deg);
+      left: 46%;
+    }
+    .right button {
+      width: 150px;
+      padding: 12px 0;
+    }
+        
+    }
+      /* Contact Us End */
+
+      /* About Us Start */
+    #about_us{
+        height: 66vh;
+        /*center the content vertically using flexbox*/
+        /* display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; */
+        background-color: #1E1E1E;
+    }
+
+    .aboutpic {
+        width: 13%;
+        height: 7%;
+        
+    }
+
+    #about_us h4{
+        font-size: 12px;
+        text-align: left;
+        /* padding-right: 30px; */
+        color: white;
+    }
+
+    #about_us #ap1{
+        font-size: 10px;
+        text-align: left;
+        /* padding-right: 30px; */
+        color: white;
+    }
+
+    #about_us #ap2{
+        font-size: 10px;
+        text-align: left;
+        /* padding-right: 30px; */
+        color: white;
+    }
+}
+
+/* About Us End */
+
