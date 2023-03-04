@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <title> Estudyantipid | Home </title>
+  <title> Estudyantipid | Profile </title>
+  <link rel="shortcut icon" href="https://i.ibb.co/2KsCsg8/Estudyan-Tipid-logo-white.png">
   <?php
   echo "<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>";
   echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
