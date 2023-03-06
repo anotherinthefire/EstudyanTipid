@@ -1,3 +1,19 @@
+<?php
+include_once('../components/config.php');
+// Function to generate OTP
+// If form is submitted
+if (isset($_POST['wallet'])) {
+  // Get values from form 
+  $balance = $_POST['balance'];
+
+  // Insert user data into database
+  $query = "UPDATE user SET balance = $balance";
+  $result = mysqli_query($conn, $query);
+
+  //Redirect to login page
+  header('Location: login.php');
+}
+?>
 <html>
 
 <head>
@@ -16,49 +32,22 @@
     <div class="p-4 text-center mt-5 text-dark">
       <img src="https://i.ibb.co/82wTcnN/wallet.png" alt="wallet">
 
-      <p class="display-4 fw-bold">Set up cash balance</p>
-      <p>How much do you have in your physical wallet?</p>
 
-      <input type="number" placeholder="0" PHP class="display-3 mt-5" style="
-                width: 20%; 
-                border: none;
-                border-color: transparent;
-                resize:both;
-                text-align:right;">
+      <form method="POST" action="">
+        <p class="display-4 fw-bold">Set up cash balance</p>
+        <p>How much do you have in your physical wallet?</p>
 
-                  
-                   
-      <label class="display-3 mt-5" style="
-      margin-right:10%;"> PHP</label>
+
+        <input type="number" placeholder="0" PHP class="display-3 mt-5" style=" width: 20%;border: none;border-color: transparent;resize:both; text-align:right;" name="balance" required>
+        <Modalities>
+        </Modalities>
+        <label class="display-3 mt-5" style="margin-right:10%;"> PHP</label>
     </div>
+
     <div class="d-grid gap-2 mb-3 ms-5 me-5 mt-3">
-
-      <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-success text-light fs-5 ">Set Balance</button>
-
-      <div class="modal fade" id="exampleModal" tabindex="1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              ...
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <button type="submit" class="btn btn-success text-light fs-5 " name="wallet">Set Balance</button>
     </div>
-
-
-
-
-
+    </form>
 </body>
 
 </html>

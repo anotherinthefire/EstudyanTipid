@@ -1,3 +1,22 @@
+<?php
+include_once('../components/config.php');
+
+if(isset($_POST['login'])) {
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+    $query = "SELECT * FROM user INNER JOIN wallet ON user.walletid = wallet.walletid WHERE ".$_SESSION['userid']." ";
+
+    $result = mysqli_query($conn, $query); 
+    print_r($result);    
+    if(mysqli_num_rows($result) == 1) {
+        
+       
+    } else {
+
+        $error_message = "Invalid login credentials.";
+    }  
+}
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -90,29 +109,45 @@
             </li>
 
             <!--profile-->
-            <li>
-                <a href="profile.php">
-                    <i class='bx bx-user'></i>
-                    <span class="link_name">Profile</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="profile.php">Profile</a></li>
-                </ul>
-            </li>
+            <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                     
+                      
+                    
+                
+                      echo"
+                      <li>
+                          <a href='profile.php'>
+                              <i class='bx bx-user'></i>
+                              <span class='link_name'>Profile</span>
+                          </a>
+                          <ul class='sub-menu blank'>
+                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
+                          </ul>
+                      </li>
 
-            <!--log out-->
-            <li>
-                <div class="profile-details">
-                    <div class="profile-content">
-                        <img src="../img/rj-profile.png" alt="profile">
-                    </div>
-                    <div class="name-job">
-                        <div class="profile_name">RJ.amigo</div>
-                    </div>
-                    <i class='bx bx-log-out'></i>
-                </div>
-            </li>
-        </ul>
+                      <!--log out-->
+                      <li>
+                          <div class='profile-details'>
+                              <div class='profile-content'>
+                                  <img src='../img/rj-profile.png' alt='profile'>
+                              </div>
+                              <div class='name-job'>
+                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
+                              </div>
+                              <a href=logout.php><i class='bx bx-log-out'></i></a>
+                          </div>
+                      </li>
+                  </ul>";
+                }
+                    }
+?>
     </div>
 
     <!--home-->
@@ -127,10 +162,12 @@
                 <h1>Budget</h1>
                 <label>PHP 100</label>
             </div>
+
             <div class="container-2">
                 <h1>Goals</h1>
                 <label>15&sol;20</label>
             </div>
+            
             <div class="container-3">
                 <h1>Budget Remaining</h1>
                 <label style="color: #17CF26;">PHP 100</label>

@@ -1,3 +1,6 @@
+<?php
+include_once('../components/config.php');
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -95,30 +98,45 @@
         </ul>
     </li>
 
-    <!--profile-->
-    <li>
-        <a href="profile.php">
-            <i class='bx bx-user'></i>
-            <span class="link_name">Profile</span>
-        </a>
-        <ul class="sub-menu blank">
-            <li><a class="link_name" href="profile.php">Profile</a></li>
-        </ul>
-    </li>
+    <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                     
+                      
+                    
+                
+                      echo"
+                      <li>
+                          <a href='profile.php'>
+                              <i class='bx bx-user'></i>
+                              <span class='link_name'>Profile</span>
+                          </a>
+                          <ul class='sub-menu blank'>
+                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
+                          </ul>
+                      </li>
 
-    <!--log out-->
-    <li>
-        <div class="profile-details">
-            <div class="profile-content">
-                <img src="../img/rj-profile.png" alt="profile">
-            </div>
-            <div class="name-job">
-                <div class="profile_name">RJ.amigo</div>
-            </div>
-            <i class='bx bx-log-out'></i>
-        </div>
-    </li>
-</ul>
+                      <!--log out-->
+                      <li>
+                          <div class='profile-details'>
+                              <div class='profile-content'>
+                                  <img src='../img/rj-profile.png' alt='profile'>
+                              </div>
+                              <div class='name-job'>
+                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
+                              </div>
+                              <a href=logout.php><i class='bx bx-log-out'></i></a>
+                          </div>
+                      </li>
+                  </ul>";
+                }
+                    }
+?>
 </div>
 
   <!--home-->
@@ -140,11 +158,25 @@
               </div>
             </div>
           </th>
-          <th class="username">
-            <h1>RJ Larrab Dnanidref</h1>
-            <h5>rjsinatra.qcydoqcu@gmail.com</h5>
-            <h6>RJ_ma.anniga</h6>
-          </th>
+          
+    <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                     
+                      
+          echo"            
+          <th class='username'>
+            <h1>".$_SESSION['username']."</h1>
+            <h5>".$_SESSION['email']."</h5>           
+          </th>";
+        }
+      }
+      ?>
         </tr>
         <tr class="two-button">
           <td>
