@@ -1,6 +1,9 @@
 <?php
 include_once('../components/config.php');
 ?>
+<?php
+include_once('../components/config.php');
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -120,6 +123,28 @@ include_once('../components/config.php');
                               <li><a class='link_name' href='profile.php'>Profile</a></li> 
                           </ul>
                       </li>
+    <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                     
+                      
+                    
+                
+                      echo"
+                      <li>
+                          <a href='profile.php'>
+                              <i class='bx bx-user'></i>
+                              <span class='link_name'>Profile</span>
+                          </a>
+                          <ul class='sub-menu blank'>
+                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
+                          </ul>
+                      </li>
 
                       <!--log out-->
                       <li>
@@ -158,6 +183,25 @@ include_once('../components/config.php');
               </div>
             </div>
           </th>
+          
+    <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                     
+                      
+          echo"            
+          <th class='username'>
+            <h1>".$_SESSION['username']."</h1>
+            <h5>".$_SESSION['email']."</h5>           
+          </th>";
+        }
+      }
+      ?>
           
     <?php
             

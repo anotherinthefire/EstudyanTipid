@@ -1,6 +1,3 @@
-<?php
-include_once('../components/config.php');
-?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -97,45 +94,28 @@ include_once('../components/config.php');
             </li>
 
             <!--profile-->
-            <?php
-            
-            if (isset($_SESSION['userid']))
-                {
-                    $id = $_SESSION['userid'];
-                    $sql = "SELECT * from user where userid = '$id'";
-                    $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc())
-                       {                     
-                      
-                    
-                
-                      echo"
-                      <li>
-                          <a href='profile.php'>
-                              <i class='bx bx-user'></i>
-                              <span class='link_name'>Profile</span>
-                          </a>
-                          <ul class='sub-menu blank'>
-                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
-                          </ul>
-                      </li>
+            <li>
+                <a href="profile.php">
+                    <i class='bx bx-user'></i>
+                    <span class="link_name">Profile</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="profile.php">Profile</a></li>
+                </ul>
+            </li>
 
-                      <!--log out-->
-                      <li>
-                          <div class='profile-details'>
-                              <div class='profile-content'>
-                                  <img src='../img/rj-profile.jpg' alt='profile'>
-                              </div>
-                              <div class='name-job'>
-                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
-                              </div>
-                              <a href=logout.php><i class='bx bx-log-out'></i></a>
-                          </div>
-                      </li>
-                  </ul>";
-                }
-                    }
-?>
+            <!--log out-->
+            <li>
+                <div class="profile-details">
+                    <div class="profile-content">
+                        <img src="../img/rj-profile.png" alt="profile">
+                    </div>
+                    <div class="name-job">
+                        <div class="profile_name">RJ.amigo</div>
+                    </div>
+                    <i class='bx bx-log-out'></i>
+                </div>
+            </li>
         </ul>
     </div>
 
@@ -147,214 +127,153 @@ include_once('../components/config.php');
             <br>
             <div class="card">
                 <div class="budget-details">
-                <?php 					
-                    $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =".$_SESSION['userid']." ORDER BY exid ASC";                   
-                    $result = mysqli_query($conn, $query);
-                    if(mysqli_num_rows($result) > 0)    
-                    {
+                    <table style="width:100%">
+                        <tr>
+                            <th style="text-align: left; font-weight: normal;">
+                                Networking102 Cisco Premium
+                            </th>
+                            <th style="text-align: center; font-weight: normal;">
 
-                        while ($row = mysqli_fetch_array($result))
-                         {    
-                            if (isset($_SESSION['userid']))
-                            { 
-                                ?>    
+                            </th>
+                            <th style="text-align: right; font-weight: normal;">
+                                <span style="color:#FF0000; padding-left:10px;">
+                                    Plan Due Date:
+                                </span>
+                                ₱5000
+                            </th>
+                            <th>
+                                <i class='bx bx-check' onclick="document.getElementById('stat').style.display='block'" style="width:auto;"></i>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:20px; "></td>
+                            <td></td>
+                            <td style="text-align: right; font-weight: normal;">
+                                <span style="color:#17CF26; padding-right:10px;">
+                                    Item Price:
+                                </span>
+                                ₱100
+                            </td>
+                            <td style="text-align: center;">
 
-                                    <table style="width:100%">
-                                        <tr>
-                                            <th style="text-align: left; font-weight: normal;">
-                                            <?php echo $row['xname'];?>
-                                            </th>
-                                            <th style="text-align: center; font-weight: normal;">
+                                <i class='bx bx-edit' class="edit" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"></i></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">
+                                <span style="color:#FF0000; padding-left:10px;">
+                                    On-Going
+                                </span>
+                            </td>
+                            <td>
 
-                                            </th>
-                                            <th style="text-align: right; font-weight: normal;">
-                                                <span style="color:#FF0000; padding-left:10px;">
-                                                    Plan Due Date:
-                                                </span>
-                                                <?php echo $row['xdate'];?>
-                                            </th>
-                                            <th>
-                                                <i class='bx bx-check' onclick="document.getElementById('stat').style.display='block'" style="width:auto;"></i>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td style="padding-top:20px; "></td>
-                                            <td></td>
-                                            <td style="text-align: right; font-weight: normal;">
-                                                <span style="color:#17CF26; padding-right:10px;">
-                                                    Item Price:
-                                                </span>
-                                                ₱<?php echo $row['xamount'];?>
-                                            </td>
-                                            <td style="text-align: center;">
-
-                                                <i class='bx bx-edit' class="edit" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"></i></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="text-align: left;">
-                                                <span style="color:#FF0000; padding-left:10px;">
-                                                <?php echo $row['status'];?>
-                                                </span>
-                                            </td>
-                                            <td>
-
-                                            </td>
-                                            <td style="text-align: right;">
-                                                <span style="color:#FF0000; padding-right:10px">
-                                                    Payee:
-                                                </span>
-                                                <?php echo $row['xpayee'];?>
-                                            </td>
-                                            <td style="text-align: center;">
-                                                <i class='bx bx-trash' onclick="document.getElementById('del').style.display='block'" style="width:auto;"></i>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    <?php
-                                    }
-                                }
-                            }
-                            ?>
+                            </td>
+                            <td style="text-align: right;">
+                                <span style="color:#FF0000; padding-right:10px">
+                                    Payee:
+                                </span>
+                                John Doe
+                            </td>
+                            <td style="text-align: center;">
+                                <i class='bx bx-trash' onclick="document.getElementById('del').style.display='block'" style="width:auto;"></i>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
-            <?php 					
-                    $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =".$_SESSION['userid']." ORDER BY exid ASC";                   
-                    $result = mysqli_query($conn, $query);
-                    if(mysqli_num_rows($result) > 0)    
-                    {
 
-                        while ($row = mysqli_fetch_array($result))
-                         {    
-                            if (isset($_SESSION['userid']))
-                            { 
-                                ?>    
-                                    <div id="id01" class="modal">
-                                        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <div id="id01" class="modal">
+                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-                                        <!-- modal content -->
-                                        <form class="modal-content" action="pupdate.php?exid=<?php echo $row['exid'];?>" method="post">
-                                            <div class="container">
-                                                <h1>Edit Payment</h1>
-                                                <hr>
-                                                <label for="tilt">
-                                                    <b>Title of Plan</b>
-                                                </label>
-                                                <input type="text" placeholder="" name="xname" required>
+                <!-- modal content -->
+                <form class="modal-content" action="/action_page.php">
+                    <div class="container">
+                        <h1>Edit Payment</h1>
+                        <hr>
+                        <label for="tilt">
+                            <b>Title of Plan</b>
+                        </label>
+                        <input type="text" placeholder="" name="tilt" required>
 
-                                                <label for="bud">
-                                                    <b>Enter Budget</b>
-                                                </label>
-                                                <input type="number" placeholder="0PHP" name="xamount" required>
+                        <label for="bud">
+                            <b>Enter Budget</b>
+                        </label>
+                        <input type="number" placeholder="0PHP" name="bud" required>
 
-                                                <label for="tilt">
-                                                    <b>Payee</b>
-                                                </label>
-                                                <input type="text" placeholder="" name="xpayee" required>
+                        <label for="tilt">
+                            <b>Payee</b>
+                        </label>
+                        <input type="text" placeholder="" name="tilt" required>
 
-                                                <label for="due">
-                                                    <b>Plan Due Date</b>
-                                                </label>
-                                                <br>
-                                                <input type="date" id="due" name="xdate">
-                                                <br>
-                                                <label for="status">
-                                                    <b>Status</b>
-                                                </label>
-                                                <br>
-                                                <select name="status" id="status" class="stat">
-                                                    <option id="not-done">ON-GOING</option>
-                                                    <option id="paid">PAID</option></option>
-                                                </select>
+                        <label for="due">
+                            <b>Plan Due Date</b>
+                        </label>
+                        <br>
+                        <input type="date" id="due" name="due">
 
-                                                <div class="clearfix">
-                                                    <button type="submit" name="edit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
-                                                        <b>Edit</b>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <?php
-                                    }
-                                }
-                            }?>
+                        <label for="status">
+                            <b>Status</b>
+                        </label>
+                        <br>
+                        <select name="status" id="status" class="stat">
+                            <option id="not-done">NOT DONE</option>
+                            <option id="paid">PAID</option></option>
+                        </select>
 
-                <?php 					
-                    $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =".$_SESSION['userid']." ORDER BY exid ASC";                   
-                    $result = mysqli_query($conn, $query);
-                    if(mysqli_num_rows($result) > 0)    
-                    {
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+                                <b>Edit</b>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-                        while ($row = mysqli_fetch_array($result))
-                         {    
-                            if (isset($_SESSION['userid']))
-                            { 
-                                ?>                
-                                    <div id="del" class="del-modal">
-                                        <span onclick="document.getElementById('del').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-                                        <!-- modal content -->
-                                        <form class="modal-content" action="pdelete.php?exid=<?php echo $row['exid'];?>" method="post">
-                                            <div class="container">
-                                                <h1>
-                                                    Delete Payment?
-                                                </h1>
-                                                <hr>
+            <div id="del" class="del-modal">
+                <span onclick="document.getElementById('del').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-                                                <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
-                                                <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
-                                                <div class="clearfix">
-                                                    <button type="submit" name="delete" onclick="document.getElementById('del').style.display='none'" class="cancelbtn">
-                                                        <b>DELETE</b>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                <?php
-                                }
-                            }
-                        }
-                        ?>
-             <?php 					
-                    $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =".$_SESSION['userid']." ORDER BY exid ASC";                   
-                    $result = mysqli_query($conn, $query);
-                    if(mysqli_num_rows($result) > 0)    
-                    {
+                <!-- modal content -->
+                <form class="modal-content" action="/action_page.php">
+                    <div class="container">
+                        <h1>
+                            Delete Payment?
+                        </h1>
+                        <hr>
 
-                        while ($row = mysqli_fetch_array($result))
-                         {    
-                            if (isset($_SESSION['userid']))
-                            { 
-                                ?>            
-                                    <!-- change status -->
-                                    <!-- delete modal -->
-                                    <div id="stat" class="stat-modal">
-                                        <span onclick="document.getElementById('stat').style.display='none'" class="close" title="Close Modal">&times;</span>
+                        <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
+                        <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('del').style.display='none'" class="cancelbtn">
+                                <b>DELETE</b>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-                                        <!-- modal content -->
-                                        <form class="modal-content" action="pstatus.php?exid=<?php echo $row['exid'];?>" method="post">
-                                            <div class="container">
-                                                <h1>
-                                                    Payment Done?
-                                                </h1>
-                                                <hr>
+<!-- change status -->
+            <!-- delete modal -->
+            <div id="stat" class="stat-modal">
+                <span onclick="document.getElementById('stat').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-                                                <div class="clearfix">
-                                                    <button type="submit" name="status" onclick="document.getElementById('stat').style.display='none'" class="cancelbtn">
-                                                        <b>Yes</b>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <?php
-                                    }
-                                }
-                            }
-                            ?>
+                <!-- modal content -->
+                <form class="modal-content" action="">
+                    <div class="container">
+                        <h1>
+                            Payment Done?
+                        </h1>
+                        <hr>
+
+                        <div class="clearfix">
+                            <button type="button" onclick="document.getElementById('stat').style.display='none'" class="cancelbtn">
+                                <b>Yes</b>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
 
 
         </div>

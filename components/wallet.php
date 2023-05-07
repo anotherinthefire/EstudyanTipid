@@ -1,21 +1,21 @@
 <?php
 include_once('../components/config.php');
 
-// if(isset($_POST['login'])) {
-//     $login = $_POST['login'];
-//     $password = $_POST['password'];
-//     $query = "SELECT * FROM user INNER JOIN wallet ON user.walletid = wallet.walletid WHERE ".$_SESSION['userid']." ";
+if(isset($_POST['login'])) {
+    $login = $_POST['login'];
+    $password = $_POST['password'];
+    $query = "SELECT * FROM user INNER JOIN wallet ON user.walletid = wallet.walletid WHERE ".$_SESSION['userid']." ";
 
-//     $result = mysqli_query($conn, $query); 
-//     print_r($result);    
-//     if(mysqli_num_rows($result) == 1) {
+    $result = mysqli_query($conn, $query); 
+    print_r($result);    
+    if(mysqli_num_rows($result) == 1) {
         
        
-//     } else {
+    } else {
 
-//         $error_message = "Invalid login credentials.";
-//     }  
-// }
+        $error_message = "Invalid login credentials.";
+    }  
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -136,7 +136,7 @@ include_once('../components/config.php');
                       <li>
                           <div class='profile-details'>
                               <div class='profile-content'>
-                                  <img src='../img/rj-profile.jpg' alt='profile'>
+                                  <img src='../img/rj-profile.png' alt='profile'>
                               </div>
                               <div class='name-job'>
                                   <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
@@ -156,105 +156,22 @@ include_once('../components/config.php');
             <i class='bx bx-menu'></i>
             <span class="text"></span>
         </div>
-         <div class='containers'>
         <!--3 white container-->
-        <?php
+        <div class="containers">
+            <div class="container-1">
+                <h1>Budget</h1>
+                <label>PHP 100</label>
+            </div>
+
+            <div class="container-2">
+                <h1>Goals</h1>
+                <label>15&sol;20</label>
+            </div>
             
-            if (isset($_SESSION['userid']))
-                {
-                    $id = $_SESSION['userid'];
-                    $sql = "SELECT * from user where userid = '$id'";
-                    $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc())
-                       {                                                                           
-                         echo"                           
-                                <div class='container-1'>
-                                    <h1>Balance</h1>
-                                    <label>PHP ".$row['balance']."</label>
-                                </div>";
-                       }
-                }
-
-            ?>
-            <?php 
-			if(isset($_SESSION['userid']))
-						{	
-						$query = "SELECT COUNT(*) AS AllItem FROM goal where userid =".$_SESSION["userid"]."";
-							$result = mysqli_query($conn, $query);
-							if(mysqli_num_rows($result) > 0)
-							{
-								while ($row = mysqli_fetch_array($result))
-								 {
-									echo "<div class='container-2'>
-                                          <h1>Goals</h1>
-                                          <label>".$row['AllItem']."</label>
-                                          </div>";
-									
-								 }
-							}
-						}
-							else
-							{
-								echo "<div class='container-2'
-                                      <h1>Goals</h1><br>
-                                      <label>Goal(0)</label>
-                                      </div>";
-							}
-
-					?>	
-             <?php 	
-                    		
-                    $query = "SELECT * FROM budget WHERE budget_status = 'expired' and userid =".$_SESSION['userid']."";                              
-                    $result = mysqli_query($conn, $query);
-                    $budgets = array();
-
-                    if(mysqli_num_rows($result) > 0)
-                    {
-                        while ($row = mysqli_fetch_array($result))
-                         {  
-                            array_push($budgets,$row);
-                         }
-                    }
-                    $query1 = "SELECT sum(xamount) as total_expenses FROM expenses WHERE `status` = 'paid' and userid =".$_SESSION['userid']."";                              
-                    $result1 = mysqli_query($conn, $query1);
-                    $totalExpenses = 0;
-                    $budgetSavings = 0;
-
-                    if(mysqli_num_rows($result1) > 0)
-                    {
-                        while ($row = mysqli_fetch_array($result1))
-                         {  
-                            $totalExpenses = (int) $row['total_expenses'];
-                            echo "<div class='container-3'>
-                            <h1>Budget Remaining</h1>
-                            <label style='color: #17CF26;'>PHP <?php echo  number_format(($budgetSavings - $totalExpenses),2);?></label>
-                            </div>";
-                         }
-                        
-                    }
-                    else
-                    {
-                       echo "<div class='container-3'>
-                       <h1>Budget Remaining</h1>
-                       <label style='color: #17CF26;'>PHP 0</label>
-                       </div>";
-                    }
-                    foreach ($budgets as $key => $row) {
-                        if (isset($_SESSION['userid']))
-                        { 
-                        $budgetSavings = (int) $row["budget"];                            
-                        
-                        }
-                    ?>
-        
-            <!-- <div class="container-3">
+            <div class="container-3">
                 <h1>Budget Remaining</h1>
-                <label style="color: #17CF26;">PHP 0</label>
-            </div> -->
-            <?php
-                            
-                        }
-                    ?>
+                <label style="color: #17CF26;">PHP 100</label>
+            </div>
         </div>
     </section>
 

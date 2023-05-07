@@ -1,39 +1,30 @@
 <?php
 include_once('../components/config.php');
 
-if(isset($_POST['login'])) {
-  
-    $login = $_POST['login'];
-    $username = $_POST['username'];
-    $email = $_POST['username'];
-    $password = $_POST['password'];
-    // $query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login')";
-    $query = "SELECT * FROM user WHERE username = '$username' or email ='$email' and password = '$password'";
-    $result = mysqli_query($conn, $query);
-    
-    if(mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-        $_SESSION['userid'] = $user['userid'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['first_name'] = $user['first_name'];
-        $_SESSION['last_name'] = $user['last_name'];
-        $_SESSION['balance'] = $user['balance'];
-        $_SESSION['xamount'] = $user['xamount'];
-        $_SESSION['status'] = $user['status'];
-        if($user['balance']>0)
-        {
-          header('Location: ../components/profile.php');
-        }
-        else{
-          header('Location: budget.php');
-        }
-    } else {
+if (isset($_POST['login'])) {
 
-        $error_message = "Invalid login credentials.";
-    }
+  $login = $_POST['login'];
+  $username = $_POST['username'];
+  $email = $_POST['username'];
+  $password = $_POST['password'];
+  // $query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login')";
+  $query = "SELECT * FROM user WHERE username = '$username' or email ='$email' and password = '$password'";
+  $result = mysqli_query($conn, $query);
+
+  if (mysqli_num_rows($result) == 1) {
+    $user = mysqli_fetch_assoc($result);
+    $_SESSION['userid'] = $user['userid'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['email'] = $user['email'];
+    $_SESSION['first_name'] = $user['first_name'];
+    $_SESSION['last_name'] = $user['last_name'];
+    header('Location: ../components/profile.php');
+    exit;
+  } else {
+
+    $error_message = "Invalid login credentials.";
+  }
 }
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -57,46 +48,33 @@ if(isset($_POST['login'])) {
   </div>
   <form method="POST">
     <div class="card1 col-md-4 align-items-center position-absolute top-50 start-50 translate-middle">
-<!-- signup -->
+      <!-- signup -->
       <div class="p-5 ms-3 mt-5 text-light">
         <h1 class="font-family: Poppins">Log in</h1>
         <p>Please enter your details</p>
       </div>
 
       <div class="form-floating mb-3 ms-5 me-5">
-        <input 
-        type="text" 
-        class="form-control" 
-        id="floatingInput" 
-        placeholder="name@example.com"
-        name="username" required>
+        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com" name="username" required>
         <label for="floatingInput">Email or Username</label>
       </div>
 
       <div class="form-floating mb-3 ms-5 me-5">
-        <input 
-        type="password" 
-        class="form-control" 
-        id="floatingPassword" 
-        placeholder="Password"
-        name="password" required>
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
         <label for="floatingPassword">Password</label>
       </div>
 
-      <?php 
-      if(isset($error_message)) { 
-        echo "<p>$error_message</p>"; 
-        } ?>
+      <?php
+      if (isset($error_message)) {
+        echo "<p>$error_message</p>";
+      } ?>
 
       <div class="text-end mx-5">
         <a href="forgot.php" class="text-light">Forgot password?</a>
       </div>
 
       <div class="d-grid gap-2 mb-3 ms-5 me-5 mt-3">
-        <button class="btn btn-success text-light fs-5" 
-        type="submit" 
-        name="login"
-        >Sign in</button>
+        <button class="btn btn-success text-light fs-5" type="submit" name="login">Sign in</button>
       </div>
 
       <div class="">

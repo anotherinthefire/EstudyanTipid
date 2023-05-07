@@ -1,5 +1,18 @@
 <?php
 include_once('../components/config.php');
+// Function to generate OTP
+// If form is submitted
+if (isset($_POST['wallet'])) {
+  // Get values from form 
+  $balance = $_POST['balance'];
+
+  // Insert user data into database
+  $query = "UPDATE user SET balance = $balance";
+  $result = mysqli_query($conn, $query);
+
+  //Redirect to login page
+  header('Location: login.php');
+}
 ?>
 <html>
 
@@ -18,22 +31,23 @@ include_once('../components/config.php');
   <div class="box  align-items-center position-absolute top-50 start-50 translate-middle">
     <div class="p-4 text-center mt-5 text-dark">
       <img src="https://i.ibb.co/82wTcnN/wallet.png" alt="wallet">
-      
-      
-    <form method="POST" action="budgeting.php"> 
-      <p class="display-4 fw-bold">Set up cash balance</p>
-      <p>How much do you have in your physical wallet?</p>
 
-     
-      <input type="number" placeholder="0" PHP class="display-3 mt-5" style=" width: 20%;border: none;border-color: transparent;resize:both; text-align:right;" name="balance" required>                                  
-   <Modalities>
-</Modalities>
-   <label class="display-3 mt-5" style="margin-right:10%;"> PHP</label>
+
+      <form method="POST" action="">
+        <p class="display-4 fw-bold">Set up cash balance</p>
+        <p>How much do you have in your physical wallet?</p>
+
+
+        <input type="number" placeholder="0" PHP class="display-3 mt-5" style=" width: 20%;border: none;border-color: transparent;resize:both; text-align:right;" name="balance" required>
+        <Modalities>
+        </Modalities>
+        <label class="display-3 mt-5" style="margin-right:10%;"> PHP</label>
     </div>
-   
+
     <div class="d-grid gap-2 mb-3 ms-5 me-5 mt-3">
       <button type="submit" class="btn btn-success text-light fs-5 " name="wallet">Set Balance</button>
     </div>
     </form>
 </body>
+
 </html>
