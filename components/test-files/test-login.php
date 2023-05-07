@@ -10,8 +10,7 @@ if(isset($_POST['login'])) {
     $password = $_POST['password'];
     
     // Query database for user with matching email or username and password
-    // $query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login') AND password = '$password'";
-    $query = "SELECT * FROM user WHERE password = '$password'";
+    $query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login') AND password = '$password'";
     $result = mysqli_query($db, $query);
     
     // If user is found, log them in and redirect to dashboard page

@@ -180,14 +180,13 @@ hr {
   align-items: center;
   border-radius: 20px;
 
-  display: flex;
-  align-items: center;
+  
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
   margin-bottom:20px;
 
-  position: static;
+
 }
 .budget-details:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);

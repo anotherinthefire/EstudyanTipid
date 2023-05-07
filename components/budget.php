@@ -1,3 +1,7 @@
+<?php
+include_once('../components/config.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -94,29 +98,42 @@
             </li>
 
             <!--profile-->
-            <li>
-                <a href="profile.php">
-                    <i class='bx bx-user'></i>
-                    <span class="link_name">Profile</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="profile.php">Profile</a></li>
-                </ul>
-            </li>
+            <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                                                                            
+                      echo"
+                      <li>
+                          <a href='profile.php'>
+                              <i class='bx bx-user'></i>
+                              <span class='link_name'>Profile</span>
+                          </a>
+                          <ul class='sub-menu blank'>
+                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
+                          </ul>
+                      </li>
 
-            <!--log out-->
-            <li>
-                <div class="profile-details">
-                    <div class="profile-content">
-                        <img src="../img/rj-profile.png" alt="profile">
-                    </div>
-                    <div class="name-job">
-                        <div class="profile_name">RJ.amigo</div>
-                    </div>
-                    <i class='bx bx-log-out'></i>
-                </div>
-            </li>
-        </ul>
+                      <!--log out-->
+                      <li>
+                          <div class='profile-details'>
+                              <div class='profile-content'>
+                                  <img src='../img/rj-profile.jpg' alt='profile'>
+                              </div>
+                              <div class='name-job'>
+                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
+                              </div>
+                              <a href=logout.php><i class='bx bx-log-out'></i></a>
+                          </div>
+                      </li>
+                  </ul>";
+                }
+                    }
+?>
     </div>
 
     <!--home-->
@@ -127,35 +144,108 @@
             <br>
             <div class="card">
                 <div class="budget-details">
-                    <table style="width:100%">
-                        <tr>
-                            <th style="text-align: left; font-weight: normal;">
-                                Personal Expenses
-                            </th>
-                            <th style="text-align: center; font-weight: normal;">
-                                As of (Date)
-                            </th>
-                            <th style="text-align: right; font-weight: normal;">
-                                ₱5000
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="padding-top:20px; "></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">
-                                ₱4000<span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
-                            </td>
-                            <td></td>
-                            <td style="text-align: right;">
-                                <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱1000
-                            </td>
-                        </tr>
-                    </table>
+                <?php 					
+                    $query = "SELECT * FROM budget WHERE userid =".$_SESSION['userid']."";                              
+                    $result = mysqli_query($conn, $query);
+                    $budgets = array();
+
+                    if(mysqli_num_rows($result) > 0)
+                    {
+                        while ($row = mysqli_fetch_array($result))
+                         {  
+                            array_push($budgets,$row);
+                         }
+                    }
+                    
+                    $query1 = "SELECT sum(xamount) as total_expenses FROM expenses WHERE `status` = 'paid' and userid =".$_SESSION['userid']."";                              
+                    $result1 = mysqli_query($conn, $query1);
+                    $totalExpenses = 0;
+                    $budgetSavings = 0;
+
+                    if(mysqli_num_rows($result1) > 0)
+                    {
+                        while ($row = mysqli_fetch_array($result1))
+                         {  
+                            $totalExpenses = (int) $row['total_expenses'];
+                         }
+                    }
+                    foreach ($budgets as $key => $row) 
+                    {
+                        if (isset($_SESSION['userid']))
+                        { 
+                            $budgetSavings = (int) $row["budget"];                            
+                        }
+                    }
+
+                    $query2 = "SELECT * FROM budget WHERE userid =".$_SESSION['userid']."";                              
+                    $result2 = mysqli_query($conn, $query2);                    
+                    if(mysqli_num_rows($result2) > 0)
+                    {
+                        $dateToday = date('Y-m-d');
+                        while ($row = mysqli_fetch_array($result2))
+                         {  
+                            if($dateToday != $row['period'] && $row['budget_status'] != "expired")
+                            {
+                               
+                            
+                    
+                            ?>
+
+                <table style="width:100%">
+                    <tr>
+                        <th style="text-align: left; font-weight: normal;">
+                            <?php echo $row["bname"];?>
+                        </th>
+                        <th style="text-align: center; font-weight: normal;">
+                            Until (<?php echo  $row["period"];?>)
+                        </th>
+                        <th style="text-align: right; font-weight: normal;">
+                            TOTAL BALANCE: <?php echo number_format($budgetSavings,2);?>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="padding-top:20px; "></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">
+                            ₱ <?php echo number_format($totalExpenses,2);?><span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
+                        </td>
+                        <td></td>
+                        <td style="text-align: right;">
+                            <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱ <?php echo  number_format(($budgetSavings - $totalExpenses),2);?>
+                        </td>
+                    </tr>
+                </table>
+                <?php
+                            }
+                            else {
+                                $id = $row['budgetid'];
+                                $sql_update = "UPDATE budget set budget_status = 'expired' WHERE budgetid = '$id'";
+                                $res = mysqli_query($conn, $sql_update);
+
+
+                            }
+                        } 
+
+                    }
+                    // // print_r($budgets);  
+                    // if(mysqli_num_rows($result) > 0)
+                    // {
+
+                    //     while ($row = mysqli_fetch_array($result))
+                    //      {    
+                           
+                    //     }
+                    // }
+
+                    ?>
+
                 </div>
             </div>
+
+            
             <button class="add" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">
                 <b>+ Add Budget</b>
             </button>
@@ -163,7 +253,7 @@
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
                 <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
+                <form class="modal-content" action="binsert.php" method="post">
                     <div class="container">
                         <h1>Budget Details</h1>
                         <hr>
@@ -171,26 +261,22 @@
                         <label for="tilt">
                             <b>Title of Budget</b>
                         </label>
-                        <input type="text" placeholder="" name="tilt" required>
+                        <input type="text" placeholder="" name="bname" required>
 
                         <label for="bud">
                             <b>Enter Budget</b>
                         </label>
-                        <input type="number" placeholder="0PHP" name="bud" required>
+                        <input type="number" placeholder="0PHP" name="budget" required>
 
-                        <label for="period">
-                            <b>Period</b>
+                        <label for="Period">
+                            <b>Period:</b>
+                            <br>
                         </label>
-                        <br>
-                        <select name="period" id="period" class="period">
-                            <option id="day">day</option>
-                            <option id="week">week</option>
-                            <option id="month">month</option>
-                        </select>
+                        <input type="date" id="period" name="period">
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
                         <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
+                            <button type="submit" name="submit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
                         </div>
                     </div>
                 </form>

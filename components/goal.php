@@ -2,6 +2,7 @@
 include_once('config.php');
 $query = "SELECT * FROM `goal`;";
 $result = mysqli_query($conn, $query);
+
 ?>
 
 <!DOCTYPE html>
@@ -100,29 +101,42 @@ $result = mysqli_query($conn, $query);
             </li>
 
             <!--profile-->
-            <li>
-                <a href="profile.php">
-                    <i class='bx bx-user'></i>
-                    <span class="link_name">Profile</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="profile.php">Profile</a></li>
-                </ul>
-            </li>
+            <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                                                                            
+                      echo"
+                      <li>
+                          <a href='profile.php'>
+                              <i class='bx bx-user'></i>
+                              <span class='link_name'>Profile</span>
+                          </a>
+                          <ul class='sub-menu blank'>
+                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
+                          </ul>
+                      </li>
 
-            <!--log out-->
-            <li>
-                <div class="profile-details">
-                    <div class="profile-content">
-                        <img src="../img/rj-profile.png" alt="profile">
-                    </div>
-                    <div class="name-job">
-                        <div class="profile_name">RJ.amigo</div>
-                    </div>
-                    <i class='bx bx-log-out'></i>
-                </div>
-            </li>
-        </ul>
+                      <!--log out-->
+                      <li>
+                          <div class='profile-details'>
+                              <div class='profile-content'>
+                                  <img src='../img/rj-profile.jpg' alt='profile'>
+                              </div>
+                              <div class='name-job'>
+                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
+                              </div>
+                              <a href=logout.php><i class='bx bx-log-out'></i></a>
+                          </div>
+                      </li>
+                  </ul>";
+                }
+                    }
+?>
     </div>
 
     <!--home-->
@@ -132,82 +146,79 @@ $result = mysqli_query($conn, $query);
             <h1 class="page-title">GOALS</h1>
             <br>
             <div class="card">
-                <div class="budget-details">
-                    <?php
-                if (mysqli_num_rows($result) > 0) {
-                echo'<table style="width:100%">';
-                while($row = mysqli_fetch_assoc($result)) {        
-                echo'<tr><th style="text-align: left; font-weight: normal;">'
-                . $row["gtitle"] .
-                            '</th>
-                            <th style="text-align: center; font-weight: normal;">
-                            </th>
-                            <th style="text-align: right; font-weight: normal;">
-                                <span style="color:#FF0000; padding-right:10px;">Goal Date:</span>'
-                                . $row["gddate"] .
-                            '</th>
-                        </tr>
-                        <tr>
-                            <td style="padding-top:20px; ">
-                            </td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">
-                                <span style="color:#17CF26; padding-left:10px;">
-                                    ACHIEVED
-                                </span>
-                            </td>
-                            <td></td>
-                            <td style="text-align: right;">
-                                <span style="color:#17CF26; padding-right:10px">
-                                    Goal Item Price:
-                                </span>'
-                                . $row["gtamount"] . '
-                            </td>
-                        </tr>';
-                    }
-                    echo "</table>";
-                } else {
-                    echo "No data found";
-                }
-                
-                // Close the database connection
+            <div class="budget-details">
+            <?php 
+					
+                    $query = "SELECT * FROM goal WHERE status ='pending' and userid =".$_SESSION['userid']." ORDER BY gid ASC";                   
+                    $result = mysqli_query($conn, $query);
+                    if(mysqli_num_rows($result) > 0)
+                    {
 
-                ?>
-                </div>
-            </div>
+                        while ($row = mysqli_fetch_array($result))
+                         {    
+                            if (isset($_SESSION['userid']))
+                            {?>                   
+                           <table style="width:100%">
+                           <tr>
+                                    <th style="text-align: left; font-weight: normal;"><?php echo $row["gtitle"];?></th>
+                                    <th style="text-align: center; font-weight: normal;"></th>
+                                        <th style="text-align: right; font-weight: normal;">
+                                            <span style="color:#FF0000; padding-right:10px;">Goal Date:</span><?php echo $row["gddate"];?></th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-top:20px;"></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <span style="color:#17CF26; padding-left:10px;"><?php echo $row["status"];?></span>
+                                        </td>
+                                        <td></td>
+                                        <td style="text-align: right;"><span style="color:#17CF26; padding-right:10px">Goal Item Price:</span>₱<?php echo $row["gtamount"];?></td>
+                                    </tr>                                
+                                </table>                                                                                                                  
+                            <?php 
+                                    }
+                                }
+                            }
+
+                            ?>                
+               </div>
+        </div>        
+
             <button class="add" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">
                 <b>+ Add Goal</b>
             </button>
             <div id="id01" class="modal">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
+
                 <!-- modal content -->
-                <form class="modal-content" action="/action_page.php" method="get">
+                <form class="modal-content" action="ginsert.php" method="POST">
                     <div class="container">
                         <h1>Goals</h1>
                         <hr>
                         <label for="tilt">
                             <b>Title of Goal</b>
                         </label>
-                        <input type="text" placeholder="" name="tilt" required>
+                        <input type="text" placeholder="" name="gtitle" required>
                         <label for="bud">
                             <b>Amount</b>
                         </label>
-                        <input type="number" placeholder="0PHP" name="bud" required>
+                        <input type="number" placeholder="0PHP" name="gtamount" required>
 
                         <label for="gdate">
                             <b>Goal Date:</b>
                             <br>
                         </label>
-                        <input type="date" id="gdate" name="gdate">
+                        <input type="date" id="gdate" name="gddate">
 
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
+
                         <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
+                            <button type="submit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn" name="submit"><b>Add Goal</b></button>
                         </div>
                     </div>
                 </form>

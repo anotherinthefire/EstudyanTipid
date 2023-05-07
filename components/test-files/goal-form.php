@@ -18,13 +18,12 @@ if(isset($_POST['submit'])){
   // Get the form data and sanitize it
   $gtitle = mysqli_real_escape_string($conn, $_POST['gtitle']);
   $gtamount = mysqli_real_escape_string($conn, $_POST['gtamount']);
-  $balance = mysqli_real_escape_string($conn, $_POST['balance']);
   $gddate = mysqli_real_escape_string($conn, $_POST['gddate']);
   $status = mysqli_real_escape_string($conn, $_POST['status']);
   
   // Insert the data into the database
-  $sql = "INSERT INTO goal (gtitle, gtamount, balance, gddate, status)
-  VALUES ('$gtitle', '$gtamount', '$balance', '$gddate', '$status')";
+  $sql = "INSERT INTO goal (gtitle, gtamount, gddate, status)
+  VALUES ('$gtitle', '$gtamount', '$gddate', '$status')";
   
   if (mysqli_query($conn, $sql)) {
     echo "New record created successfully";

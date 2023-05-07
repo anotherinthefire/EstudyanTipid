@@ -1,24 +1,39 @@
 <?php
-session_start();
 include_once('../components/config.php');
 
 if(isset($_POST['login'])) {
+  
     $login = $_POST['login'];
+    $username = $_POST['username'];
+    $email = $_POST['username'];
     $password = $_POST['password'];
-    $query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login') AND password = '$password'";
+    // $query = "SELECT * FROM user WHERE (email = '$login' OR username = '$login')";
+    $query = "SELECT * FROM user WHERE username = '$username' or email ='$email' and password = '$password'";
     $result = mysqli_query($conn, $query);
     
     if(mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
         $_SESSION['userid'] = $user['userid'];
         $_SESSION['username'] = $user['username'];
-        header('Location: ../componens/profile.php');
-        exit;
+        $_SESSION['email'] = $user['email'];
+        $_SESSION['first_name'] = $user['first_name'];
+        $_SESSION['last_name'] = $user['last_name'];
+        $_SESSION['balance'] = $user['balance'];
+        $_SESSION['xamount'] = $user['xamount'];
+        $_SESSION['status'] = $user['status'];
+        if($user['balance']>0)
+        {
+          header('Location: ../components/profile.php');
+        }
+        else{
+          header('Location: budget.php');
+        }
     } else {
 
         $error_message = "Invalid login credentials.";
     }
 }
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -54,7 +69,7 @@ if(isset($_POST['login'])) {
         class="form-control" 
         id="floatingInput" 
         placeholder="name@example.com"
-        name="login" required>
+        name="username" required>
         <label for="floatingInput">Email or Username</label>
       </div>
 
@@ -74,7 +89,7 @@ if(isset($_POST['login'])) {
         } ?>
 
       <div class="text-end mx-5">
-        <a href="forgot.html" class="text-light">Forgot password?</a>
+        <a href="forgot.php" class="text-light">Forgot password?</a>
       </div>
 
       <div class="d-grid gap-2 mb-3 ms-5 me-5 mt-3">
