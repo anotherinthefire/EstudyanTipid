@@ -1,23 +1,130 @@
-//////////////////////////////////////////////////////////php
+<?php 
+
+
+               
+
+while ($row_budget = mysqli_fetch_array($result_budget)) {
+
+?>
+    <div class="budget-details">
+        <table style="width:100%">
+            <tr>
+                <th style="text-align: left; font-weight: normal;">
+                    <?php echo $row_budget["bname"];?>
+                </th>
+                <th style="text-align: center; font-weight: normal;">
+                    Until (<?php echo  $row_budget["period"];?>)
+                </th>
+                <th style="text-align: right; font-weight: normal;">
+                    TOTAL BALANCE: <?php echo number_format($budgetSavings,2);?>
+                </th>
+            </tr>
+            <tr>
+                <td style="padding-top:20px; "></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align: left;">
+                    ₱ <?php echo number_format($totalExpenses,2);?><span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
+                </td>
+                <td></td>
+                <td style="text-align: right;">
+                    <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱ <?php echo  number_format(($budgetSavings - $totalExpenses),2);?>
+                </td>
+            </tr>
+        </table>
+    </div>
+<?php 
+        }
+
+?>
+
+
+
+
+
+
+<div class="card">
+    <?php 
+    $query = "SELECT * FROM budget WHERE userid =".$_SESSION['userid']." AND budget_status = ''";                             
+    $result = mysqli_query($conn, $query);
+    if(mysqli_num_rows($result) > 0)
+    {
+        while ($row_budget = mysqli_fetch_array($result))
+        {  
+            $budgetId = $row_budget["budgetid"];
+            $budgetSavings = $row_budget["budget"];
+            $query1 = "SELECT sum(xamount) as total_expenses FROM expenses WHERE `status` = 'paid' and budgetid = $budgetId";                              
+            $result1 = mysqli_query($conn, $query1);
+            $totalExpenses = 0;
+            if(mysqli_num_rows($result1) > 0)
+            {
+                while ($row = mysqli_fetch_array($result1))
+                {  
+                    $totalExpenses = (int) $row['total_expenses'];
+                }
+            }
+            ?>
+            <div class="budget-details">
+                <table style="width:100%">
+                    <tr>
+                        <th style="text-align: left; font-weight: normal;">
+                            <?php echo $row_budget["bname"];?>
+                        </th>
+                        <th style="text-align: center; font-weight: normal;">
+                            Until (<?php echo  $row_budget["period"];?>)
+                        </th>
+                        <th style="text-align: right; font-weight: normal;">
+                            TOTAL BALANCE: <?php echo number_format($budgetSavings,2);?>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="padding-top:20px; "></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">
+                            ₱ <?php echo number_format($totalExpenses,2);?><span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
+                        </td>
+                        <td></td>
+                        <td style="text-align: right;">
+                            <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱ <?php echo  number_format(($budgetSavings - $totalExpenses),2);?>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <?php
+        }
+    }
+    ?>
+</div>
+
+==============================================================
+<?php
+include_once('../components/config.php');
+
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8">
-    <title> Estudyantipid | Home </title>
+    <title> Estudyantipid | Budget </title>
+    <link rel="shortcut icon" href="https://i.ibb.co/2KsCsg8/Estudyan-Tipid-logo-white.png">
     <?php
     echo "<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>";
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
-
     <style>
-        <?php include '../style/create-form.css'; ?><?php include '../style/style.css'; ?>
+        <?php include '../style/budget.css'; ?><?php include '../style/style.css'; ?>
     </style>
-
 </head>
 
 <body>
     <div class="sidebar close">
+
         <!--logo-->
         <div class="logo-details">
             <span class="logo_name"><img src="../img/logo.png" class="logo"></span>
@@ -25,361 +132,233 @@
 
         <!--nav-->
         <ul class="nav-links">
+
             <!--wallet-->
             <li>
-                <a href="#">
+                <a href="wallet.php">
                     <i class='bx bx-wallet'></i>
                     <span class="link_name">Wallet</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Wallet</a></li>
+                    <li><a class="link_name" href="wallet.php">Wallet</a></li>
                 </ul>
             </li>
 
             <!--record-->
             <li>
                 <div class="iocn-link">
-                    <a href="#">
+                    <a href="rec-stats.php">
                         <i class='bx bx-file'></i>
                         <span class="link_name">Record Statistics</span>
                     </a>
                 </div>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Record Statistics</a></li>
+                    <li><a class="link_name" href="rec-stats.php">Record Statistics</a></li>
                 </ul>
             </li>
 
             <!--budget-->
             <li>
                 <div class="iocn-link">
-                    <a href="#">
+                    <a href="budget.php">
                         <i class='bx bx-credit-card'></i>
                         <span class="link_name">Budget</span>
                     </a>
                 </div>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Budget</a></li>
+                    <li><a class="link_name" href="budget.php">Budget</a></li>
                 </ul>
             </li>
 
             <!--goals-->
             <li>
                 <div class="iocn-link">
-                    <a href="#">
+                    <a href="goal.php">
                         <i class='bx bx-target-lock'></i>
                         <span class="link_name">Goals</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Goals</a></li>
-                    <li><a href="#">Manage</a></li>
-                    <li><a href="#">Achieved</a></li>
+                    <li><a class="link_name" href="goal.php">Goals</a></li>
+                    <li><a href="goal-manage.php">Manage</a></li>
+                    <li><a href="goal-achieved.php">Achieved</a></li>
                 </ul>
             </li>
 
             <!-- planned budget-->
             <li>
                 <div class="iocn-link">
-                    <a href="#">
+                    <a href="planned.php">
                         <i class='bx bx-credit-card-alt'></i>
                         <span class="link_name">Planned Budget</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
                 </div>
                 <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Planned Budget</a></li>
-                    <li><a href="#">Add</a></li>
-                    <li><a href="#">Manage</a></li>
+                    <li><a class="link_name" href="planned.php">Planned Budget</a></li>
+                    <li><a href="planned-manage.php">Manage</a></li>
                 </ul>
             </li>
 
             <!--profile-->
-            <li>
-                <a href="#">
-                    <i class='bx bx-user'></i>
-                    <span class="link_name">Profile</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Profile</a></li>
-                </ul>
-            </li>
+            <?php
+            
+            if (isset($_SESSION['userid']))
+                {
+                    $id = $_SESSION['userid'];
+                    $sql = "SELECT * from user where userid = '$id'";
+                    $result = $conn->query($sql);
+                    while($row = $result->fetch_assoc())
+                       {                                                                            
+                      echo"
+                      <li>
+                          <a href='profile.php'>
+                              <i class='bx bx-user'></i>
+                              <span class='link_name'>Profile</span>
+                          </a>
+                          <ul class='sub-menu blank'>
+                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
+                          </ul>
+                      </li>
 
-            <!--log out-->
-            <li>
-                <div class="profile-details">
-                    <div class="profile-content">
-                        <img src="../img/rj-profile.png" alt="profile">
-                    </div>
-                    <div class="name-job">
-                        <div class="profile_name">RJ.amigo</div>
-                    </div>
-                    <i class='bx bx-log-out'></i>
-                </div>
-            </li>
-        </ul>
+                      <!--log out-->
+                      <li>
+                          <div class='profile-details'>
+                              <div class='profile-content'>
+                                  <img src='../img/rj-profile.jpg' alt='profile'>
+                              </div>
+                              <div class='name-job'>
+                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
+                              </div>
+                              <a href=logout.php><i class='bx bx-log-out'></i></a>
+                          </div>
+                      </li>
+                  </ul>";
+                }
+                    }
+?>
     </div>
 
     <!--home-->
     <section class="home-section">
         <div class="home-content">
             <i class='bx bx-menu'></i>
-
             <h1 class="page-title">BUDGET DETAILS</h1>
             <br>
+            
             <div class="card">
-                <div class="budget-details">
-                    <table style="width:100%">
-                        <tr>
-                            <th style="text-align: left;">Personal Expenses</th>
-                            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            
-                            </th>
-                            <th style="text-align: right;">₱5000</th>
-                        </tr>
-                        <tr>
-                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">₱4000 Budgeted Deductions</td>
-                            <td></td>
-                            <td style="text-align: right;">Budgeted Savings: ₱1000</td>
-                        </tr>
-                    </table>
-                </div>
-                
-            </div>
 
+            <?php 
+$query = "SELECT * FROM budget WHERE userid =" . $_SESSION['userid'] . " AND budget_status = ''";                             
+$result = mysqli_query($conn, $query);
 
+if(mysqli_num_rows($result) > 0) {
+    while ($row_budget = mysqli_fetch_array($result)) {  
+        $budgetId = $row_budget["budgetid"];
+        $budgetSavings = $row_budget["budget"];
+        $query1 = "SELECT sum(xamount) as total_expenses FROM expenses WHERE `status` = 'paid' and budgetid = $budgetId";                              
+        $result1 = mysqli_query($conn, $query1);
+        $totalExpenses = 0;
+
+        if(mysqli_num_rows($result1) > 0) {
+            while ($row = mysqli_fetch_array($result1)) {  
+                $totalExpenses = (int) $row['total_expenses'];
+            }
+        }
+
+        $expiredDate = date('Y-m-d', strtotime($row_budget["period"]. ' + 1 day'));
+        if (strtotime($expiredDate) < time()) { // check if the budget is expired
+            // update the user's wallet balance with the remaining balance of the expired budget
+            $expiredBalance = $budgetSavings - $totalExpenses;
+            $query2 = "UPDATE user SET balance = balance + $expiredBalance WHERE userid =" . $_SESSION['userid'];
+            mysqli_query($conn, $query2);
+
+            // update the budget status and expired balance
+            $query3 = "UPDATE budget SET budget_status = 'expired', budget = $expiredBalance WHERE budgetid = $budgetId";
+            mysqli_query($conn, $query3);
+        }
+        ?>
+        <div class="budget-details">
+            <table style="width:100%">
+                <tr>
+                    <th style="text-align: left; font-weight: normal;">
+                        <?php echo $row_budget["bname"];?>
+                    </th>
+                    <th style="text-align: center; font-weight: normal;">
+                        Until (<?php echo  $row_budget["period"];?>)
+                    </th>
+                    <th style="text-align: right; font-weight: normal;">
+                        TOTAL BALANCE: <?php echo number_format($budgetSavings,2);?>
+                    </th>
+                </tr>
+                <tr>
+                    <td style="padding-top:20px; "></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align: left;">
+                        ₱ <?php echo number_format($totalExpenses,2);?><span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
+                    </td>
+                    <td></td>
+                    <td style="text-align: right;">
+                        <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱ <?php echo  number_format(($budgetSavings - $totalExpenses),2);?>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <?php
+    }
+}
+?>
+            
             <button class="add" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">
                 <b>+ Add Budget</b>
             </button>
-
             <div id="id01" class="modal">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
                 <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
+                <form class="modal-content" action="binsert.php" method="post">
                     <div class="container">
                         <h1>Budget Details</h1>
                         <hr>
-                        <label for="email"><b>Title of Budget</b></label>
-                        <input type="text" placeholder="" name="email" required>
 
-                        <label for="psw"><b>Enter Budget</b></label>
-                        <input type="text" placeholder="0PHP" name="psw" required>
+                        <label for="tilt">
+                            <b>Title of Budget</b>
+                        </label>
+                        <input type="text" placeholder="" name="bname" required>
 
+                        <label for="bud">
+                            <b>Enter Budget</b>
+                        </label>
+                        <input type="number" placeholder="0PHP" name="budget" required>
+
+                        <label for="Period">
+                            <b>Period:</b>
+                            <br>
+                        </label>
+                        <input type="date" id="period" name="period">
                         <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
                         <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
-
                         <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
+                            <button type="submit" name="submit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
                         </div>
                     </div>
                 </form>
             </div>
-
-
         </div>
     </section>
-
-
     <?php
     echo '<script src="../scripts/nav.js"></script>
   </script>';
-    echo '<script src="../scripts/create-form.js">
+    echo '<script src="../scripts/budget.js">
   </script>';
     ?>
     <script>
-        <?php include '../scripts/create-form.js'; ?>
+        <?php include '../scripts/budget.js'; ?>
     </script>
 </body>
 
 </html>
-//////////////////////////////////////////////////////////////////
-/* Full-width input fields */
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-
-  background: #ffffff;
-  border: 1px solid #000000;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-}
-
-/* Add a background color when the inputs get focus */
-input[type="text"]:focus,
-input[type="password"]:focus {
-  background-color: #ddd;
-  outline: none;
-}
-.page-title {
-  margin-left: auto;
-  margin-right: auto;
-  top: 10vh;
-  font-weight: bold;
-  text-decoration: underline;
-
-  position: absolute;
-  width: 100%;
-  text-align: center;
-
-  font-style: normal;
-  font-weight: 600;
-  font-size: 30px;
-  color: #ffffff;
-}
-
-/* Set a style for all buttons */
-.add {
-  background-color: #ffe600;
-  color: #1e1e1e;
-  padding: 15px;
-  padding-bottom: 12px;
-  padding-top: 12px;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  border-radius: 15px;
-  opacity: 0.85;
-  margin-top: 170vh;
-  font-size: 18px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  position: absolute;
-  right: 16px;
-}
-
-button:hover {
-  opacity: 1;
-}
-
-/* Extra styles for the cancel button */
-.cancelbtn {
-  padding: 14px 20px;
-  float: left;
-  width: 30%;
-
-  background: #ffe600;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 15px;
-  margin-left: 35%;
-  margin-right: 35%;
-}
-
-/* Add padding to container elements */
-.container {
-  padding: 16px;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgba(0, 0, 0, 0.5);
-  color: #1e1e1e;
-  padding-top: 50px;
-}
-
-.modal h1 {
-  text-align: center;
-}
-
-/* Modal Content/Box */
-.modal-content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%; /* Could be more or less, depending on screen size */
-  border-radius: 10px;
-  padding: 50px;
-
-  background: #ffffff;
-  box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.32);
-  border-radius: 18px;
-}
-
-/* Style the horizontal ruler */
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
-}
-
-/* The Close Button (x) */
-.close {
-  position: absolute;
-  right: 35px;
-  top: 15px;
-  font-size: 40px;
-  font-weight: bold;
-  color: #f1f1f1;
-}
-
-.close:hover,
-.close:focus {
-  color: #f44336;
-  cursor: pointer;
-}
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-/* Change styles for cancel button and signup button on extra small screens */
-@media screen and (max-width: 300px) {
-  .cancelbtn,
-  .signupbtn {
-    width: 100%;
-  }
-}
-
-.card {
-  margin-top: 50vh;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-img {
-  border-radius: 5px 5px 0 0;
-}
-
-.budget-details {
-  padding: 50px;
-  transition: 0.3s;
-  width: 100%;
-
-  background: #ffffff;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
-  align-items: center;
-  border-radius: 20px;
-
-  position: static;
-}
-.budget-details:hover {
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-}

@@ -1,24 +1,28 @@
 <?php
-include_once('config.php');
-
-
-
-if(isset($_POST['edit'], $_GET['exid'])) {
-    // Get values from form
-
-    $exid = $_GET['exid'];  
-    $userid = $_SESSION['userid'];
+include('config.php');
+if(isset($_POST['edit'])){
+    $exid = $_GET['exid'];
     $xname = $_POST['xname'];
-    $xpayee = $_POST['xpayee'];
     $xamount = $_POST['xamount'];
-    $xdate = $_POST['xdate'];  
-    $status = $_POST['status']; 
-    // print_r($_POST); 
+    $xpayee = $_POST['xpayee'];
+    $xdate = $_POST['xdate'];
+    $budgetid = $_POST['budgetid'];
+    $status = $_POST['status'];
+
+    $query = "UPDATE expenses SET xname='$xname', xamount='$xamount', xpayee='$xpayee', xdate='$xdate', budgetid='$budgetid', status='$status' WHERE exid='$exid'";
+
+    $result = mysqli_query($conn, $query);
+    
+    if($result){
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        echo "<script>alert('Expenses Updated Successfully')</script>";
+        echo "<script>window.location.href='expenses.php'</script>";
+    }
+    else{
+        echo "<script>alert('Failed to Update Expenses')</script>";
+    }
+}
+
+    // Redirect back to previous page
     
 
-    // Insert user data into database
-    $sql = "UPDATE expenses SET xname='$xname', xpayee='$xpayee' ,xamount ='$xamount', xdate='$xdate', status = '$status' WHERE exid= '$exid'";
-    $sult = mysqli_query($conn, $sql);
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
-}
-?>

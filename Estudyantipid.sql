@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2023 at 02:49 PM
--- Server version: 10.4.16-MariaDB
--- PHP Version: 7.4.12
+-- Generation Time: May 08, 2023 at 12:30 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -34,7 +34,7 @@ CREATE TABLE `budget` (
   `budget` int(11) NOT NULL,
   `period` date NOT NULL,
   `budget_status` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `budget`
@@ -43,7 +43,9 @@ CREATE TABLE `budget` (
 INSERT INTO `budget` (`budgetid`, `userid`, `bname`, `budget`, `period`, `budget_status`) VALUES
 (4, 1, 'Budget of April', 200000, '2023-04-16', ''),
 (8, 13, 'Budget of March', 10000000, '2023-04-30', ''),
-(9, 13, 'Budget of April', 100000, '2023-04-17', 'expired');
+(9, 13, 'Budget of April', 100000, '2023-04-17', 'expired'),
+(11, 17, 'April Onsite ', 4716, '2023-05-06', 'expired'),
+(12, 17, 'June Onsite', 8000, '2023-06-30', '');
 
 -- --------------------------------------------------------
 
@@ -58,18 +60,27 @@ CREATE TABLE `expenses` (
   `xpayee` varchar(200) NOT NULL,
   `xamount` int(200) NOT NULL,
   `xdate` date NOT NULL,
-  `status` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` varchar(200) NOT NULL,
+  `budgetid` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `expenses`
 --
 
-INSERT INTO `expenses` (`exid`, `userid`, `xname`, `xpayee`, `xamount`, `xdate`, `status`) VALUES
-(9, 13, 'Meralco Bills', '', 1000, '2023-03-18', 'PAID'),
-(11, 13, 'Meralco Bills', 'Miguel', 1000, '2023-03-18', 'PAID'),
-(12, 13, 'tite operation', 'hotdog', 420, '2023-04-28', 'PAID'),
-(13, 1, 'Utang', 'Miguel', 100000, '2023-04-17', 'PAID');
+INSERT INTO `expenses` (`exid`, `userid`, `xname`, `xpayee`, `xamount`, `xdate`, `status`, `budgetid`) VALUES
+(9, 13, 'Meralco Bills', '', 1000, '2023-03-18', 'PAID', 0),
+(11, 13, 'Meralco Bills', 'Miguel', 1000, '2023-03-18', 'PAID', 0),
+(12, 13, 'tite operation', 'hotdog', 420, '2023-04-28', 'PAID', 0),
+(13, 1, 'Utang', 'Miguel', 100000, '2023-04-17', 'PAID', 0),
+(14, 17, 'Mix and Match', 'Mc Donalds', 79, '2023-05-10', 'PAID', 0),
+(15, 17, 'test payment ', 'Jollibee', 90, '2023-05-09', 'PAID', 11),
+(17, 17, 'mixnmatch', 'mdcolibee', 86, '2023-05-26', 'PAID', 12),
+(18, 17, 'tumesting ka', 'mang boy', 50, '2023-05-24', 'PAID', 12),
+(19, 17, 'Pamasahe', 'jeepbeep', 50, '2023-05-17', 'PAID', 11),
+(20, 17, 'Starbs', 'Stabs Parih', 250, '2023-05-24', 'PAID', 12),
+(23, 17, 'mixnmatch', 'mdcolibee', 502, '2023-05-27', 'PAID', 11),
+(24, 17, 'test payment  2', 'jabilee', 1992, '2023-05-31', 'PAID', 12);
 
 -- --------------------------------------------------------
 
@@ -84,7 +95,7 @@ CREATE TABLE `goal` (
   `gtamount` int(200) NOT NULL,
   `gddate` date NOT NULL,
   `status` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `goal`
@@ -98,7 +109,11 @@ INSERT INTO `goal` (`gid`, `gtitle`, `userid`, `gtamount`, `gddate`, `status`) V
 (30, 'Gunting', 1, 10, '2023-04-01', 'pending'),
 (31, 'Electric Fan', 13, 12312312, '2023-03-25', 'ACHIEVED'),
 (33, 'Cellphone', 13, 5000, '2023-03-18', 'PENDING'),
-(34, 'Gunting', 13, 4000, '2023-03-18', 'PENDING');
+(34, 'Gunting', 13, 4000, '2023-03-18', 'PENDING'),
+(35, ' GeForce RTX 3060', 17, 25000, '2023-05-31', 'ACHIEVED'),
+(36, 'Keyboard + Mouse Set', 17, 2000, '2023-05-29', 'ACHIEVED'),
+(37, 'KZ Z! Pro', 17, 1041, '2023-05-25', 'ACHIEVED'),
+(38, 'KZ VX PRO', 17, 3658, '2023-06-10', 'PENDING');
 
 -- --------------------------------------------------------
 
@@ -111,19 +126,7 @@ CREATE TABLE `message` (
   `email` varchar(200) NOT NULL,
   `name` varchar(200) NOT NULL,
   `message` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `records`
---
-
-CREATE TABLE `records` (
-  `incomeid` int(11) NOT NULL,
-  `userid` int(200) NOT NULL,
-  `input` int(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -140,7 +143,7 @@ CREATE TABLE `user` (
   `last_name` varchar(255) NOT NULL,
   `balance` int(11) NOT NULL,
   `img` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `user`
@@ -154,7 +157,7 @@ INSERT INTO `user` (`userid`, `username`, `email`, `password`, `first_name`, `la
 (14, 'asd', 'asd@gmail.com', 'asd', 'asd', 'asd', 0, ''),
 (15, 'Ron', 'Ron@gmail.com', 'Ron', 'Ron', 'Ron', 10000, ''),
 (16, 'Kurt', 'Kurt@gmail.com', 'Kurt', 'Kurt', 'Kurt', 10000, ''),
-(17, 'Jhonil', 'Jhonil@gmail.com', 'Jhonil', 'Jhonil', 'Jhonil', 0, ''),
+(17, 'Jhonil', 'Jhonil@gmail.com', 'Jhonil', 'Jhonil', 'Jhonil', 3775, ''),
 (18, 'test1', 'elaijhasolitario@gmail.com', 'test1', 'Juan', 'Solitario', 0, ''),
 (19, 'admin', 'paulo@gmail.com', 'admin', 'Katrina Mae', 'Biay', 123456, ''),
 (20, 'asdd', 'asd@gmail.com', 'asdd', 'Elaijha Luis', 'asda', 123333, ''),
@@ -190,12 +193,6 @@ ALTER TABLE `message`
   ADD PRIMARY KEY (`mid`);
 
 --
--- Indexes for table `records`
---
-ALTER TABLE `records`
-  ADD PRIMARY KEY (`incomeid`);
-
---
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -209,31 +206,25 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `budget`
 --
 ALTER TABLE `budget`
-  MODIFY `budgetid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `budgetid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `expenses`
 --
 ALTER TABLE `expenses`
-  MODIFY `exid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `exid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `goal`
 --
 ALTER TABLE `goal`
-  MODIFY `gid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `gid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `message`
 --
 ALTER TABLE `message`
   MODIFY `mid` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `records`
---
-ALTER TABLE `records`
-  MODIFY `incomeid` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`

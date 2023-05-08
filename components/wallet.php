@@ -1,21 +1,5 @@
 <?php
 include_once('../components/config.php');
-
-if(isset($_POST['login'])) {
-    $login = $_POST['login'];
-    $password = $_POST['password'];
-    $query = "SELECT * FROM user INNER JOIN wallet ON user.walletid = wallet.walletid WHERE ".$_SESSION['userid']." ";
-
-    $result = mysqli_query($conn, $query); 
-    print_r($result);    
-    if(mysqli_num_rows($result) == 1) {
-        
-       
-    } else {
-
-        $error_message = "Invalid login credentials.";
-    }  
-}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -24,7 +8,7 @@ if(isset($_POST['login'])) {
     <meta charset="UTF-8">
     <title> EstudyanTipid | Wallet Dashboard </title>
     <link rel="icon" href="https://i.ibb.co/2KsCsg8/Estudyan-Tipid-logo-white.png">
-    <link rel="stylesheet" href="../style/wallet.css">
+    <link rel="stylesheet" href="../style/wallet.css?<?php time()?>">
     <!-- Boxiocns CDN Link / search lang boxicons sa googol -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,45 +94,56 @@ if(isset($_POST['login'])) {
 
             <!--profile-->
             <?php
-            
-            if (isset($_SESSION['userid']))
-                {
-                    $id = $_SESSION['userid'];
-                    $sql = "SELECT * from user where userid = '$id'";
-                    $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc())
-                       {                     
-                      
-                    
-                
-                      echo"
-                      <li>
-                          <a href='profile.php'>
-                              <i class='bx bx-user'></i>
-                              <span class='link_name'>Profile</span>
-                          </a>
-                          <ul class='sub-menu blank'>
-                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
-                          </ul>
-                      </li>
 
-                      <!--log out-->
-                      <li>
-                          <div class='profile-details'>
-                              <div class='profile-content'>
-                                  <img src='../img/rj-profile.png' alt='profile'>
-                              </div>
-                              <div class='name-job'>
-                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
-                              </div>
-                              <a href=logout.php><i class='bx bx-log-out'></i></a>
-                          </div>
-                      </li>
-                  </ul>";
-                }
-                    }
+if (isset($_SESSION['userid'])) {
+    $id = $_SESSION['userid'];
+    $sql = "SELECT * FROM user WHERE userid = '$id'";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $img_filename = $row['img'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+
+        echo "
+        <li>
+            <a href='profile.php'>
+                <i class='bx bx-user'></i>
+                <span class='link_name'>Profile</span>
+            </a>
+            <ul class='sub-menu blank'>
+                <li><a class='link_name' href='profile.php'>Profile</a></li> 
+            </ul>
+        </li>
+
+        <!--log out-->
+        <li>
+            <div class='profile-details'>
+                <div class='profile-content'>
+                    <img src='../img/$img_filename' alt='profile'>
+                </div>
+                <div class='name-job'>
+                    <div class=profile_name>$first_name $last_name</div>
+                </div>
+                <a href=logout.php><i class='bx bx-log-out'></i></a>
+            </div>
+        </li>
+    </ul>";
+    }
+}
 ?>
     </div>
+
+
+
+
+
+
+
+
+
+
+    
+
 
     <!--home-->
     <section class="home-section">
@@ -156,40 +151,111 @@ if(isset($_POST['login'])) {
             <i class='bx bx-menu'></i>
             <span class="text"></span>
         </div>
-        <!--3 white container-->
-        <div class="containers">
-            <div class="container-1">
-                <h1>Budget</h1>
-                <label>PHP 100</label>
-            </div>
-
-            <div class="container-2">
-                <h1>Goals</h1>
-                <label>15&sol;20</label>
-            </div>
+        <div class='containers'>
+            <!--3 white container-->
             
-            <div class="container-3">
-                <h1>Budget Remaining</h1>
-                <label style="color: #17CF26;">PHP 100</label>
+            
+            <?php
+if (isset($_SESSION['userid'])) {
+    $id = $_SESSION['userid'];
+    $sql = "SELECT * from user where userid = '$id'";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $current_balance = $row['balance'];
+?>
+
+<div class='container-1' id="balance-container">
+    <h1>Balance</h1>
+    <label>PHP <?php echo $current_balance; ?></label>
+</div>
+
+<div id="id01" class="modal">
+    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+    <!-- modal content -->
+    <form class="modal-content" action="update-balance.php" method="post">
+        <div class="container">
+            <h1>Edit balance</h1>
+            <hr>
+            <label for="bud">
+                <b>Enter Balance</b>
+            </label>
+            <input type="number" placeholder="0PHP" name="budget" value="<?php echo $current_balance; ?>" required>
+
+            <div class="clearfix">
+                <button type="submit" name="submit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
             </div>
+        </div>
+    </form>
+</div>
+
+<?php
+    }
+}
+?>
+
+
+
+
+
+
+
+
+
+
+
+            <?php
+            if (isset($_SESSION['userid'])) {
+                $query = "SELECT COUNT(*) AS AllItem FROM goal where userid =" . $_SESSION["userid"] . "";
+                $result = mysqli_query($conn, $query);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_array($result)) {
+                        echo "<div class='container-2'>
+                                          <h1>Goals</h1>
+                                          <label>" . $row['AllItem'] . "</label>
+                                          </div>";
+                    }
+                }
+            } else {
+                echo "<div class='container-2'
+                                      <h1>Goals</h1><br>
+                                      <label>Goal(0)</label>
+                                      </div>";
+            }
+
+            $query = "SELECT SUM(budget) AS total_budget FROM budget WHERE userid =".$_SESSION['userid']." AND budget_status = '' ";
+            $result = mysqli_query($conn, $query);
+            $budget = mysqli_fetch_assoc($result);
+            
+            echo "<div class='container-3'>
+                    <h1>Total Budget Remaining</h1>";
+            echo "<label style='color: #17CF26;'>PHP " . $budget['total_budget'] . "</label>";
+            echo "</div>";
+            ?>
         </div>
     </section>
 
+    </section>
+    <script src="../scripts/nav.js"></script>
     <script>
-        let arrow = document.querySelectorAll(".arrow");
-        for (var i = 0; i < arrow.length; i++) {
-            arrow[i].addEventListener("click", (e) => {
-                let arrowParent = e.target.parentElement.parentElement; //selecting main parent of arrow
-                arrowParent.classList.toggle("showMenu");
-            });
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // Get the balance container
+    var balanceContainer = document.getElementById('balance-container');
+
+    // When the balance container is clicked, display the modal
+    balanceContainer.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
         }
-        let sidebar = document.querySelector(".sidebar");
-        let sidebarBtn = document.querySelector(".bx-menu");
-        console.log(sidebarBtn);
-        sidebarBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("close");
-        });
-    </script>
+    }
+</script>
 </body>
 
 </html>

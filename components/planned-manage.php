@@ -1,3 +1,6 @@
+<?php
+include_once('../components/config.php');
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -94,28 +97,44 @@
             </li>
 
             <!--profile-->
-            <li>
-                <a href="profile.php">
-                    <i class='bx bx-user'></i>
-                    <span class="link_name">Profile</span>
-                </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="profile.php">Profile</a></li>
-                </ul>
-            </li>
+            <?php
 
-            <!--log out-->
-            <li>
-                <div class="profile-details">
-                    <div class="profile-content">
-                        <img src="../img/rj-profile.png" alt="profile">
-                    </div>
-                    <div class="name-job">
-                        <div class="profile_name">RJ.amigo</div>
-                    </div>
-                    <i class='bx bx-log-out'></i>
+if (isset($_SESSION['userid'])) {
+    $id = $_SESSION['userid'];
+    $sql = "SELECT * FROM user WHERE userid = '$id'";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $img_filename = $row['img'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+
+        echo "
+        <li>
+            <a href='profile.php'>
+                <i class='bx bx-user'></i>
+                <span class='link_name'>Profile</span>
+            </a>
+            <ul class='sub-menu blank'>
+                <li><a class='link_name' href='profile.php'>Profile</a></li> 
+            </ul>
+        </li>
+
+        <!--log out-->
+        <li>
+            <div class='profile-details'>
+                <div class='profile-content'>
+                    <img src='../img/$img_filename' alt='profile'>
                 </div>
-            </li>
+                <div class='name-job'>
+                    <div class=profile_name>$first_name $last_name</div>
+                </div>
+                <a href=logout.php><i class='bx bx-log-out'></i></a>
+            </div>
+        </li>
+    </ul>";
+    }
+}
+?>
         </ul>
     </div>
 
@@ -126,11 +145,20 @@
             <h1 class="page-title">MANAGE PAYMENT</h1>
             <br>
             <div class="card">
+    <?php
+    $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =" . $_SESSION['userid'] . " ORDER BY exid ASC";
+    $result = mysqli_query($conn, $query);
+    if (mysqli_num_rows($result) > 0) {
+        $total_budget = 0;
+        while ($row = mysqli_fetch_array($result)) {
+            if (isset($_SESSION['userid'])) {
+                $total_budget += $row['xamount'];
+    ?>
                 <div class="budget-details">
                     <table style="width:100%">
                         <tr>
                             <th style="text-align: left; font-weight: normal;">
-                                Networking102 Cisco Premium
+                                <?php echo $row['xname']; ?>
                             </th>
                             <th style="text-align: center; font-weight: normal;">
 
@@ -139,30 +167,51 @@
                                 <span style="color:#FF0000; padding-left:10px;">
                                     Plan Due Date:
                                 </span>
-                                ₱5000
+                                <?php echo $row['xdate']; ?>
                             </th>
+
                             <th>
-                                <i class='bx bx-check' onclick="document.getElementById('stat').style.display='block'" style="width:auto;"></i>
+                           <div id="stat-<?php echo $row['exid'];?>" class="stat-modal">
+                            <span onclick="document.getElementById('stat-<?php echo $row['exid'];?>').style.display='none'" class="close" title="Close Modal">&times;</span>
+
+                            <!-- modal content -->
+                            <form class="modal-content" action="pstatus.php?exid=<?php echo $row['exid'];?>" method="post">
+                                <div class="container">
+                                    <h1>
+                                        Payment Done?
+                                    </h1>
+                                    <hr>
+
+                                    <div class="clearfix">
+                                        <button type="submit" name="status" onclick="document.getElementById('stat').style.display='none'" class="cancelbtn">
+                                            <b>Yes</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                                <i class='bx bx-check' onclick="document.getElementById(`stat-<?php echo $row['exid'];?>`).style.display='block'" style="width:auto;"></i>
                             </th>
                         </tr>
                         <tr>
-                            <td style="padding-top:20px; "></td>
+                            <td>Budget: <?php echo $row['budgetid']; ?></td>
+                            
                             <td></td>
                             <td style="text-align: right; font-weight: normal;">
                                 <span style="color:#17CF26; padding-right:10px;">
                                     Item Price:
                                 </span>
-                                ₱100
+                                ₱<?php echo $row['xamount']; ?>
                             </td>
                             <td style="text-align: center;">
-
-                                <i class='bx bx-edit' class="edit" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"></i></i>
+                            
+                                <i class='bx bx-edit' class="edit" onclick="document.getElementById(`id01-<?php echo $row['exid'];?>`).style.display='block'" style="width:auto;"></i></i>
                             </td>
                         </tr>
                         <tr>
                             <td style="text-align: left;">
                                 <span style="color:#FF0000; padding-left:10px;">
-                                    On-Going
+                                    <?php echo $row['status']; ?>
                                 </span>
                             </td>
                             <td>
@@ -172,110 +221,198 @@
                                 <span style="color:#FF0000; padding-right:10px">
                                     Payee:
                                 </span>
-                                John Doe
+                                <?php echo $row['xpayee']; ?>
                             </td>
                             <td style="text-align: center;">
-                                <i class='bx bx-trash' onclick="document.getElementById('del').style.display='block'" style="width:auto;"></i>
+                            
+                                <i class='bx bx-trash' onclick="document.getElementById(`del-<?php echo $row['exid'];?>`).style.display='block'" style="width:auto;"></i>
                             </td>
                         </tr>
                     </table>
                 </div>
-            </div>
+                
+    <?php
+            }
+        }
+    }
+    ?>
+    <div class='budget-details'>
+        <table style='width:100%'>
+            <tr>
+                <th style='text-align: left; font-weight: normal;'>Total Price</th>
+                <th style='text-align: center; font-weight: normal;'></th>
+                <th style='text-align: right; font-weight: normal;'>
+                        
+                    ₱<?php 
+                    if($total_budget === 0)
+                    {
+                         echo (0);                       
+                    } 
+                    else
+                    {
+                        echo ($total_budget);
+                    }
+                    ?>
+                </th>
+                <th></th>
+            </tr>
+        </table>
+    </div>
+    
+</div>
 
 
-            <div id="id01" class="modal">
-                <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <?php
+            $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =" . $_SESSION['userid'] . " ORDER BY exid ASC";
+            $result = mysqli_query($conn, $query);
+            if (mysqli_num_rows($result) > 0) {
+                while ($row = mysqli_fetch_array($result)) {
+                    if (isset($_SESSION['userid'])) {
+                        //get available budgets for the user
+                        $budget_query = "SELECT * FROM budget WHERE budget_status ='' and userid =" . $_SESSION['userid'] . " ORDER BY budgetid ASC";
+                        $budget_result = mysqli_query($conn, $budget_query);
+                        $budget_options = '';
+                        while ($budget_row = mysqli_fetch_array($budget_result)) 
+                        {
+                            $budget_options .= '<option value="' . $budget_row['budgetid'] . '"';
+                            if ($budget_row['budgetid'] == $row['budgetid']) 
+                            {
+                                $budget_options .= ' selected="selected"';
+                            }
+                            $budget_options .= '>' . $budget_row['bname'] . ' - ' . $budget_row['budget'] . ' PHP</option>';
+                        }
+            ?>
+                        <div id="id01-<?php echo $row['exid'];?>" class="modal">
+                            <span onclick="document.getElementById('id01-<?php echo $row['exid'];?>').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-                <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
-                    <div class="container">
-                        <h1>Edit Payment</h1>
-                        <hr>
-                        <label for="tilt">
-                            <b>Title of Plan</b>
-                        </label>
-                        <input type="text" placeholder="" name="tilt" required>
+                            <!-- modal content -->
+                            <form class="modal-content" action="pupdate.php?exid=<?php echo $row['exid']; ?>" method="post">
+                                <div class="container">
+                                    <h1>Edit Payment</h1>
+                                    <hr>
+                                    <label for="tilt">
+                                        <b>Title of Plan</b>
+                                    </label>
+                                    <input type="text" placeholder="" name="xname" value="<?php echo $row['xname']; ?>" required>
 
-                        <label for="bud">
-                            <b>Enter Budget</b>
-                        </label>
-                        <input type="number" placeholder="0PHP" name="bud" required>
+                                    <label for="budget">
+                                        <b>Select Budget</b>
+                                    </label>
 
-                        <label for="tilt">
-                            <b>Payee</b>
-                        </label>
-                        <input type="text" placeholder="" name="tilt" required>
+                                    <label for="xamount">
+                                        <b>Enter Amount</b>
+                                    </label>
+                                    <input type="number" placeholder="0PHP" name="xamount" value="<?php echo $row['xamount']; ?>" required>
 
-                        <label for="due">
-                            <b>Plan Due Date</b>
-                        </label>
-                        <br>
-                        <input type="date" id="due" name="due">
+                                    <label for="tilt">
+                                        <b>Payee</b>
+                                    </label>
+                                    <input type="text" placeholder="" name="xpayee" value="<?php echo $row['xpayee']; ?>" required>
 
-                        <label for="status">
-                            <b>Status</b>
-                        </label>
-                        <br>
-                        <select name="status" id="status" class="stat">
-                            <option id="not-done">NOT DONE</option>
-                            <option id="paid">PAID</option></option>
-                        </select>
+                                    <label for="due">
+                                        <b>Plan Due Date</b>
+                                    </label>
+                                    <br>
+                                    <input type="date" id="due" name="xdate" value="<?php echo $row['xdate']; ?>">
+                                    <br>
+                                    <label for="budget">
+                                        <b>Budget</b><br>
+                                    </label>
+                                    <select name="budgetid" class="stat">
+                                        <?php echo $budget_options; ?>
+                                    </select>
+                                    <br>
+                                    <label for="status">
+                                        <b>Status</b>
+                                    </label>
+                                    <br>
+                                    <select name="status" id="status" class="stat">
+                                        <option id="not-done" <?php if ($row['status'] == 'on-going') echo 'selected="selected"'; ?>>ON-GOING</option>
+                                        <option id="paid" <?php if ($row['status'] == 'paid') echo 'selected="selected"'; ?>>PAID</option>
+                                    </select>
 
-                        <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
-                                <b>Edit</b>
-                            </button>
+                                    <div class="clearfix">
+                                        <button type="submit" name="edit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">
+                                            <b>Edit</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                </form>
-            </div>
+            <?php
+                    }
+                }
+            }
+            ?>
 
+            <?php
+            $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =" . $_SESSION['userid'] . " ORDER BY exid ASC";
+            $result = mysqli_query($conn, $query);
+            if (mysqli_num_rows($result) > 0) {
 
-            <div id="del" class="del-modal">
-                <span onclick="document.getElementById('del').style.display='none'" class="close" title="Close Modal">&times;</span>
+                while ($row = mysqli_fetch_array($result)) {
+                    if (isset($_SESSION['userid'])) {
+            ?>
+                        <div id="del-<?php echo $row['exid'];?>" class="del-modal">
+                            <span onclick="document.getElementById('del-<?php echo $row['exid'];?>').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-                <!-- modal content -->
-                <form class="modal-content" action="/action_page.php">
-                    <div class="container">
-                        <h1>
-                            Delete Payment?
-                        </h1>
-                        <hr>
+                            <!-- modal content -->
+                            <form class="modal-content" action="pdelete.php?exid=<?php echo $row['exid']; ?>" method="post">
+                                <div class="container">
+                                    <h1>
+                                        Delete Payment?
+                                    </h1>
+                                    <hr>
 
-                        <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
-                        <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
-                        <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('del').style.display='none'" class="cancelbtn">
-                                <b>DELETE</b>
-                            </button>
+                                    <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
+                                                <input type="text" placeholder="Repeat Password" name="psw-repeat" required> -->
+                                    <div class="clearfix">
+                                        <button type="submit" name="delete" onclick="document.getElementById('del').style.display='none'" class="cancelbtn">
+                                            <b>DELETE</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                </form>
-            </div>
+            <?php
+                    }
+                }
+            }
+            ?>
+            <?php
+            $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =" . $_SESSION['userid'] . " ORDER BY exid ASC";
+            $result = mysqli_query($conn, $query);
+            if (mysqli_num_rows($result) > 0) {
 
-<!-- change status -->
-            <!-- delete modal -->
-            <div id="stat" class="stat-modal">
-                <span onclick="document.getElementById('stat').style.display='none'" class="close" title="Close Modal">&times;</span>
+                while ($row = mysqli_fetch_array($result)) {
+                    if (isset($_SESSION['userid'])) {
+            ?>
+                        <!-- change status -->
+                        <!-- delete modal -->
+                        <div id="stat" class="stat-modal">
+                            <span onclick="document.getElementById('stat').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-                <!-- modal content -->
-                <form class="modal-content" action="">
-                    <div class="container">
-                        <h1>
-                            Payment Done?
-                        </h1>
-                        <hr>
+                            <!-- modal content -->
+                            <form class="modal-content" action="pstatus.php?exid=<?php echo $row['exid'];?>" method="post">
+                                <div class="container">
+                                    <h1>
+                                        Payment Done?
+                                    </h1>
+                                    <hr>
 
-                        <div class="clearfix">
-                            <button type="button" onclick="document.getElementById('stat').style.display='none'" class="cancelbtn">
-                                <b>Yes</b>
-                            </button>
+                                    <div class="clearfix">
+                                        <button type="submit" name="status" onclick="document.getElementById('stat').style.display='none'" class="cancelbtn">
+                                            <b>Yes</b>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </div>
-                </form>
-            </div>
-
-
+            <?php
+                    }
+                }
+            }
+            ?>
         </div>
     </section>
     <?php

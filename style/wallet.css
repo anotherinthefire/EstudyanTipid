@@ -323,3 +323,85 @@
   font-weight: bold;
   font-size: 25px;
 }
+/* Set a style for all buttons */
+.add {
+  background-color: #ffe600;
+  color: #1e1e1e;
+  padding: 15px;
+  padding-bottom: 12px;
+  padding-top: 12px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 15px;
+  opacity: 0.85;
+  margin-top: 170vh;
+  font-size: 18px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  right: 16px;
+}
+
+button:hover {
+  opacity: 1;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  padding: 14px 20px;
+  float: left;
+  width: 30%;
+
+  background: #ffe600;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+  margin-left: 35%;
+  margin-right: 35%;
+}
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #1e1e1e;
+}
+
+.modal h1 {
+  text-align: center;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%; /* Could be more or less, depending on screen size */
+  border-radius: 10px;
+  padding: 50px;
+  position:sticky;
+  top: 10vh;
+  border-bottom: 10vh;
+
+  background: #ffffff;
+  box-shadow: 4px 4px 4px 3px rgba(0, 0, 0, 0.32);
+  border-radius: 18px;
+}
+
+
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}

@@ -99,44 +99,44 @@ include_once('../components/config.php');
 
             <!--profile-->
             <?php
-            
-            if (isset($_SESSION['userid']))
-                {
-                    $id = $_SESSION['userid'];
-                    $sql = "SELECT * from user where userid = '$id'";
-                    $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc())
-                       {                     
-                      
-                    
-                
-                      echo"
-                      <li>
-                          <a href='profile.php'>
-                              <i class='bx bx-user'></i>
-                              <span class='link_name'>Profile</span>
-                          </a>
-                          <ul class='sub-menu blank'>
-                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
-                          </ul>
-                      </li>
 
-                      <!--log out-->
-                      <li>
-                          <div class='profile-details'>
-                              <div class='profile-content'>
-                                  <img src='../img/rj-profile.jpg' alt='profile'>
-                              </div>
-                              <div class='name-job'>
-                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
-                              </div>
-                              <a href=logout.php><i class='bx bx-log-out'></i></a>
-                          </div>
-                      </li>
-                  </ul>";
-                }
-                    }
+if (isset($_SESSION['userid'])) {
+    $id = $_SESSION['userid'];
+    $sql = "SELECT * FROM user WHERE userid = '$id'";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $img_filename = $row['img'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+
+        echo "
+        <li>
+            <a href='profile.php'>
+                <i class='bx bx-user'></i>
+                <span class='link_name'>Profile</span>
+            </a>
+            <ul class='sub-menu blank'>
+                <li><a class='link_name' href='profile.php'>Profile</a></li> 
+            </ul>
+        </li>
+
+        <!--log out-->
+        <li>
+            <div class='profile-details'>
+                <div class='profile-content'>
+                    <img src='../img/$img_filename' alt='profile'>
+                </div>
+                <div class='name-job'>
+                    <div class=profile_name>$first_name $last_name</div>
+                </div>
+                <a href=logout.php><i class='bx bx-log-out'></i></a>
+            </div>
+        </li>
+    </ul>";
+    }
+}
 ?>
+
     </div>
 
     <!--home-->
@@ -144,7 +144,7 @@ include_once('../components/config.php');
         <div class="home-content">
             <i class='bx bx-menu'></i>
 
-            <div class="col-xs-6" id="sort">
+            <!-- <div class="col-xs-6" id="sort">
                 <select name="history" id="history">
                     <option>--sort by--</option>
                     <option id="date">date</option>
@@ -153,84 +153,196 @@ include_once('../components/config.php');
                     <option id="income">income</option>
                 </select>
 
-            </div>
+            </div> -->
             <!-- search -->
             <div class="wrap">
-                <div class="search">
-                    <button type="submit" class="searchButton">
-                        <i class='bx bx-search-alt-2'></i>
-                    </button>
-                    <input type="text" class="searchTerm" placeholder="Search...">
-                </div>
-            </div>
+    <form method="get" action="">
+        <div class="search">
+            <button type="submit" class="searchButton">
+                <i class='bx bx-search-alt-2'></i>
+            </button>
+            <input type="text" class="searchTerm" name="searchTerm" placeholder="Search..." value="<?php echo isset($_GET['searchTerm']) ? $_GET['searchTerm'] : '' ?>">
+        </div>
+    </form>
+</div>
+
 
             <br>
             <div class="card">
-                <div class="budget-details">
-                <?php 	
-                    include_once('config.php');				
-                    $query = "SELECT * FROM budget WHERE budget_status = 'expired' and userid =".$_SESSION['userid']."";                              
-                    $result = mysqli_query($conn, $query);
-                    $budgets = array();
+                <?php
+                $searchTerm = isset($_GET['searchTerm']) ? $_GET['searchTerm'] : '';
 
-                    if(mysqli_num_rows($result) > 0)
-                    {
-                        while ($row = mysqli_fetch_array($result))
-                         {  
-                            array_push($budgets,$row);
-                         }
-                    }
-                    $query1 = "SELECT sum(xamount) as total_expenses FROM expenses WHERE `status` = 'paid' and userid =".$_SESSION['userid']."";                              
-                    $result1 = mysqli_query($conn, $query1);
-                    $totalExpenses = 0;
-                    $budgetSavings = 0;
+                // retrieve data from expenses table
+                $query_expenses = "SELECT * FROM expenses WHERE status = 'PAID' AND userid = " . $_SESSION['userid'] . " 
+                AND (xname LIKE '%$searchTerm%' 
+                OR xpayee LIKE '%$searchTerm%' 
+                OR xamount LIKE '%$searchTerm%' 
+                OR status LIKE '%$searchTerm%' 
+                OR xname LIKE '%$searchTerm%'
+                OR xdate LIKE '%$searchTerm%') ORDER BY exid DESC";
+                $result_expenses = mysqli_query($conn, $query_expenses);
+            
+                // retrieve data from budget table
+                $query_budget = "SELECT * FROM budget WHERE budget_status = 'expired' AND userid = " . $_SESSION['userid'] . " 
+                AND (bname LIKE '%$searchTerm%' 
+                OR budget LIKE '%$searchTerm%'
+                OR period LIKE '%$searchTerm%') ORDER BY budgetid DESC";
+                $result_budget = mysqli_query($conn, $query_budget);
+            
+                // retrieve data from goal table
+                $query_goal = "SELECT * FROM goal WHERE status = 'ACHIEVED' AND userid = " . $_SESSION['userid'] . " 
+                AND (gtitle LIKE '%$searchTerm%' 
+                OR gtamount LIKE '%$searchTerm%'
+                OR gddate LIKE '%$searchTerm%') ORDER BY gid DESC";
+                $result_goal = mysqli_query($conn, $query_goal);
+            
+                // expenses
+                while ($row_expenses = mysqli_fetch_array($result_expenses)) {
+                ?>
+                    <div class="budget-details">
+                        <table style="width:100%">
+                            <tr>
+                                <th style="text-align: left; font-weight: normal;">
+                                    <?php echo $row_expenses['xname']; ?>
+                                </th>
+                                <th style="text-align: center; font-weight: normal;"></th>
+                                <th style="text-align: right; font-weight: normal;">
+                                    <span style="color:#FF0000; padding-left:10px;">
+                                        Plan Due Date:
+                                    </span>
+                                    <?php echo $row_expenses['xdate']; ?>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:20px; "></td>
+                                <td></td>
+                                <td style="text-align: right; font-weight: normal;">
+                                    <span style="color:#17CF26; padding-right:10px;">
+                                        Item Price:
+                                    </span>
+                                    ₱<?php echo $row_expenses['xamount']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <span style="color:#FF0000; padding-left:10px;">
+                                        <?php echo $row_expenses['status']; ?>
+                                    </span>
+                                </td>
+                                <td></td>
+                                <td style="text-align: right;">
+                                    <span style="color:#FF0000; padding-right:10px">
+                                        Payee:
+                                    </span>
+                                    <?php echo $row_expenses['xpayee']; ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                <?php } ?>
 
-                    if(mysqli_num_rows($result1) > 0)
-                    {
-                        while ($row = mysqli_fetch_array($result1))
-                         {  
-                            $totalExpenses = (int) $row['total_expenses'];
-                         }
-                    }
-                    foreach ($budgets as $key => $row) {
-                        if (isset($_SESSION['userid']))
-                        { 
-                        $budgetSavings = (int) $row["budget"];                            
-                        
-                    
-                    ?>
-                    <table style="width:100%">
-                        <tr>
-                            <th style="text-align: left; font-weight: normal;">
-                            <?php echo $row["bname"];?>
-                            </th>
-                            <th style="text-align: center; font-weight: normal;">
-                                As of (<?php echo  $row["period"];?>)
-                            </th>
-                            <th style="text-align: right; font-weight: normal;">
-                                TOTAL BALANCE: ₱<?php echo number_format($budgetSavings,2);?>
-                            </th>
-                        </tr>
-                        <tr>
-                            <td style="padding-top:20px; "></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td style="text-align: left;">
-                                ₱<?php echo number_format($totalExpenses,2);?><span style="color:#FF0000; padding-left:10px;">Budgeted Deductions</span>
-                            </td>
-                            <td></td>
-                            <td style="text-align: right;">
-                                <span style="color:#17CF26; padding-right:10px">Budgeted Savings</span> ₱<?php echo  number_format(($budgetSavings - $totalExpenses),2);?>
-                            </td>
-                        </tr>
-                    </table>
-                            <?php
-                            }
-                        }
-                    ?>
-                </div>
+
+                <!-- budget -->
+                <?php while ($row_budget = mysqli_fetch_array($result_budget)) { ?>
+                    <div class="budget-details">
+                        <table style="width:100%">
+                            <tr>
+                                <th style="text-align: left; font-weight: normal;">
+                                    <?php echo $row_budget['bname']; ?>
+                                </th>
+                                <th style="text-align: center; font-weight: normal;">
+
+                                </th>
+                                <th style="text-align: right; font-weight: normal;">
+                                    <span style="color:#FF0000; padding-left:10px;">
+                                        Budget Deadline:
+                                    </span>
+                                    <?php echo $row_budget['period']; ?>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:20px; "></td>
+                                <td></td>
+                                <td style="text-align: right; font-weight: normal;">
+                                    <span style="color:#17CF26; padding-right:10px;">
+                                        Budget Savings:
+                                    </span>
+                                    ₱<?php echo $row_budget['budget']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <span style="color:#17CF26; padding-left:10px;">
+                                        <?php echo $row_budget['budget_status']; ?>
+                                    </span>
+                                </td>
+                                <td>
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                <?php
+                }
+                ?>
+
+
+
+
+
+                <!-- goal -->
+                <?php while ($row_goal = mysqli_fetch_array($result_goal)) { ?>
+                    <div class="budget-details">
+                        <table style="width:100%">
+                            <tr>
+                                <th style="text-align: left; font-weight: normal;">
+                                    <?php echo $row_goal['gtitle']; ?>
+                                </th>
+                                <th style="text-align: center; font-weight: normal;">
+
+                                </th>
+                                <th style="text-align: right; font-weight: normal;">
+                                    <span style="color:#FF0000; padding-left:10px;">
+                                        Goal Due Date:
+                                    </span>
+                                    <?php echo $row_goal['gddate']; ?>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="padding-top:20px; "></td>
+                                <td></td>
+                                <td style="text-align: right; font-weight: normal;">
+                                    <span style="color:#17CF26; padding-right:10px;">
+                                        Goal Amount:
+                                    </span>
+                                    ₱<?php echo $row_goal['gtamount']; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;">
+                                    <span style="color:#17CF26; padding-left:10px;">
+                                        <?php echo $row_goal['status']; ?>
+                                    </span>
+                                </td>
+                                <td>
+
+                                </td>
+
+                            </tr>
+                        </table>
+                    </div>
+
+                <?php
+                }
+                ?>
+
+
+
+
+
+
             </div>
         </div>
     </section>

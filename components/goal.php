@@ -102,40 +102,42 @@ $result = mysqli_query($conn, $query);
 
             <!--profile-->
             <?php
-            
-            if (isset($_SESSION['userid']))
-                {
-                    $id = $_SESSION['userid'];
-                    $sql = "SELECT * from user where userid = '$id'";
-                    $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc())
-                       {                                                                            
-                      echo"
-                      <li>
-                          <a href='profile.php'>
-                              <i class='bx bx-user'></i>
-                              <span class='link_name'>Profile</span>
-                          </a>
-                          <ul class='sub-menu blank'>
-                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
-                          </ul>
-                      </li>
 
-                      <!--log out-->
-                      <li>
-                          <div class='profile-details'>
-                              <div class='profile-content'>
-                                  <img src='../img/rj-profile.jpg' alt='profile'>
-                              </div>
-                              <div class='name-job'>
-                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
-                              </div>
-                              <a href=logout.php><i class='bx bx-log-out'></i></a>
-                          </div>
-                      </li>
-                  </ul>";
-                }
-                    }
+if (isset($_SESSION['userid'])) {
+    $id = $_SESSION['userid'];
+    $sql = "SELECT * FROM user WHERE userid = '$id'";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $img_filename = $row['img'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+
+        echo "
+        <li>
+            <a href='profile.php'>
+                <i class='bx bx-user'></i>
+                <span class='link_name'>Profile</span>
+            </a>
+            <ul class='sub-menu blank'>
+                <li><a class='link_name' href='profile.php'>Profile</a></li> 
+            </ul>
+        </li>
+
+        <!--log out-->
+        <li>
+            <div class='profile-details'>
+                <div class='profile-content'>
+                    <img src='../img/$img_filename' alt='profile'>
+                </div>
+                <div class='name-job'>
+                    <div class=profile_name>$first_name $last_name</div>
+                </div>
+                <a href=logout.php><i class='bx bx-log-out'></i></a>
+            </div>
+        </li>
+    </ul>";
+    }
+}
 ?>
     </div>
 
@@ -146,53 +148,54 @@ $result = mysqli_query($conn, $query);
             <h1 class="page-title">GOALS</h1>
             <br>
             <div class="card">
-            <div class="budget-details">
-            <?php 
-					
-                    $query = "SELECT * FROM goal WHERE status ='pending' and userid =".$_SESSION['userid']." ORDER BY gid ASC";                   
-                    $result = mysqli_query($conn, $query);
-                    if(mysqli_num_rows($result) > 0)
-                    {
+            <?php
+$query = "SELECT * FROM goal WHERE status ='pending' and userid =" . $_SESSION['userid'] . " ORDER BY gid ASC";
+$result = mysqli_query($conn, $query);
+if (mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_array($result)) {
+        if (isset($_SESSION['userid'])) { ?>
+            
+                <div class="budget-details">
+                    <table style="width:100%">
+                        <tr>
+                            <th style="text-align: left; font-weight: normal;"><?php echo $row["gtitle"]; ?></th>
+                            <th style="text-align: center; font-weight: normal;"></th>
+                            <th style="text-align: right; font-weight: normal;">
+                                <span style="color:#FF0000; padding-right:10px;">Goal Date:</span><?php echo $row["gddate"]; ?>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:20px;"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">
+                                <span style="color:#17CF26; padding-left:10px;"><?php echo $row["status"]; ?></span>
+                            </td>
+                            <td></td>
+                            <td style="text-align: right;"><span style="color:#17CF26; padding-right:10px">Goal Item Price:</span>₱<?php echo $row["gtamount"]; ?></td>
+                        </tr>
+                    </table>
+                    <br> <!-- Add a line break to separate the tables -->
+                </div>
+            
+        <?php
+        }
+    }
+} else {
+    echo "<h3 style='text-align: center;'>You have not added any goals yet. <br> Start saving by adding a new goal now.</h3>";
+}
+?>
+</div>
 
-                        while ($row = mysqli_fetch_array($result))
-                         {    
-                            if (isset($_SESSION['userid']))
-                            {?>                   
-                           <table style="width:100%">
-                           <tr>
-                                    <th style="text-align: left; font-weight: normal;"><?php echo $row["gtitle"];?></th>
-                                    <th style="text-align: center; font-weight: normal;"></th>
-                                        <th style="text-align: right; font-weight: normal;">
-                                            <span style="color:#FF0000; padding-right:10px;">Goal Date:</span><?php echo $row["gddate"];?></th>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding-top:20px;"></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td style="text-align: left;">
-                                            <span style="color:#17CF26; padding-left:10px;"><?php echo $row["status"];?></span>
-                                        </td>
-                                        <td></td>
-                                        <td style="text-align: right;"><span style="color:#17CF26; padding-right:10px">Goal Item Price:</span>₱<?php echo $row["gtamount"];?></td>
-                                    </tr>                                
-                                </table>                                                                                                                  
-                            <?php 
-                                    }
-                                }
-                            }
 
-                            ?>                
-               </div>
-        </div>        
 
             <button class="add" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">
                 <b>+ Add Goal</b>
             </button>
             <div id="id01" class="modal">
                 <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-
 
                 <!-- modal content -->
                 <form class="modal-content" action="ginsert.php" method="POST">

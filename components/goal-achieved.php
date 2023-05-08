@@ -13,8 +13,7 @@ include_once('../components/config.php');
     echo '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
     ?>
     <style>
-        <?php include '../style/goal-achieved.css'; ?>
-        <?php include '../style/style.css'; ?>
+        <?php include '../style/goal-achieved.css'; ?><?php include '../style/style.css'; ?>
     </style>
 </head>
 
@@ -99,40 +98,42 @@ include_once('../components/config.php');
 
             <!--profile-->
             <?php
-            
-            if (isset($_SESSION['userid']))
-                {
-                    $id = $_SESSION['userid'];
-                    $sql = "SELECT * from user where userid = '$id'";
-                    $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc())
-                       {                                                                            
-                      echo"
-                      <li>
-                          <a href='profile.php'>
-                              <i class='bx bx-user'></i>
-                              <span class='link_name'>Profile</span>
-                          </a>
-                          <ul class='sub-menu blank'>
-                              <li><a class='link_name' href='profile.php'>Profile</a></li> 
-                          </ul>
-                      </li>
 
-                      
-                      <li>
-                          <div class='profile-details'>
-                              <div class='profile-content'>
-                                  <img src='../img/rj-profile.jpg' alt='profile'>
-                              </div>
-                              <div class='name-job'>
-                                  <div class=profile_name>".$_SESSION['first_name']." ".$_SESSION['last_name']."</div>
-                              </div>
-                              <a href=logout.php><i class='bx bx-log-out'></i></a>
-                          </div>
-                      </li>
-                  </ul>";
-                }
-                    }
+if (isset($_SESSION['userid'])) {
+    $id = $_SESSION['userid'];
+    $sql = "SELECT * FROM user WHERE userid = '$id'";
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        $img_filename = $row['img'];
+        $first_name = $row['first_name'];
+        $last_name = $row['last_name'];
+
+        echo "
+        <li>
+            <a href='profile.php'>
+                <i class='bx bx-user'></i>
+                <span class='link_name'>Profile</span>
+            </a>
+            <ul class='sub-menu blank'>
+                <li><a class='link_name' href='profile.php'>Profile</a></li> 
+            </ul>
+        </li>
+
+        <!--log out-->
+        <li>
+            <div class='profile-details'>
+                <div class='profile-content'>
+                    <img src='../img/$img_filename' alt='profile'>
+                </div>
+                <div class='name-job'>
+                    <div class=profile_name>$first_name $last_name</div>
+                </div>
+                <a href=logout.php><i class='bx bx-log-out'></i></a>
+            </div>
+        </li>
+    </ul>";
+    }
+}
 ?>
         </ul>
     </div>
@@ -144,24 +145,24 @@ include_once('../components/config.php');
             <h1 class="page-title">ACHIEVEMENTS</h1>
             <br>
             <div class="card">
-                <div class="budget-details">
-                <?php 
-					
-                    $query = "SELECT * FROM goal WHERE status ='achieved' and userid =".$_SESSION['userid']." ORDER BY gid ASC";                   
-                    $result = mysqli_query($conn, $query);
-                    if(mysqli_num_rows($result) > 0)
-                    {
 
-                        while ($row = mysqli_fetch_array($result))
-                         {    
-                            if (isset($_SESSION['userid']))
-                            {                   
-                            echo"<table style='width:100%'>";
-                            echo"<tr>
-                                    <th style='text-align: left; font-weight: normal;'>".$row["gtitle"]."</th>
+                <?php
+
+                $query = "SELECT * FROM goal WHERE status ='achieved' and userid =" . $_SESSION['userid'] . " ORDER BY gid ASC";
+                $result = mysqli_query($conn, $query);
+                if (mysqli_num_rows($result) > 0) {
+
+                    while ($row = mysqli_fetch_array($result)) {
+                        if (isset($_SESSION['userid'])) {
+
+                            echo "
+                            <div class='budget-details'>
+                            <table style='width:100%'>";
+                            echo "<tr>
+                                    <th style='text-align: left; font-weight: normal;'>" . $row["gtitle"] . "</th>
                                     <th style='text-align: center; font-weight: normal;'></th>
                                         <th style='text-align: right; font-weight: normal;'>
-                                            <span style='color:#FF0000; padding-right:10px;'>Goal Date:</span>".$row["gddate"]."</th>
+                                            <span style='color:#FF0000; padding-right:10px;'>Goal Date:</span>" . $row["gddate"] . "</th>
                                     </tr>
                                     <tr>
                                         <td style='padding-top:20px;'></td>
@@ -170,18 +171,18 @@ include_once('../components/config.php');
                                     </tr>
                                     <tr>
                                         <td style='text-align: left;'>
-                                            <span style='color:#17CF26; padding-left:10px;'>".$row['status']."</span>
+                                            <span style='color:#17CF26; padding-left:10px;'>" . $row['status'] . "</span>
                                         </td>
                                         <td></td>
-                                        <td style='text-align: right;'><span style='color:#17CF26; padding-right:10px'>Goal Item Price:</span>".$row['gtamount']."</td>
+                                        <td style='text-align: right;'><span style='color:#17CF26; padding-right:10px'>Goal Item Price:</span>" . $row['gtamount'] . "</td>
                                     </tr>";
-                                }
-                                echo "</table>";
-                                                              
-                         }                           
-                        }                 
-                     ?> 
-                </div>
+                        }
+                        echo "</table>
+                                </div>";
+                    }
+                }
+                ?>
+
             </div>
         </div>
     </section>

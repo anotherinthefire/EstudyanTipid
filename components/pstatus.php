@@ -14,4 +14,3 @@ if(isset($_POST['status'], $_GET['exid'])) {
     $sult = mysqli_query($conn, $sql);
     header('Location: ' . $_SERVER['HTTP_REFERER']);
 }
-?>
