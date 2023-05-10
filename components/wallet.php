@@ -8,7 +8,7 @@ include_once('../components/config.php');
     <meta charset="UTF-8">
     <title> EstudyanTipid | Wallet Dashboard </title>
     <link rel="icon" href="https://i.ibb.co/2KsCsg8/Estudyan-Tipid-logo-white.png">
-    <link rel="stylesheet" href="../style/wallet.css?<?php time()?>">
+    <link rel="stylesheet" href="../style/wallet.css?<?php time() ?>">
     <!-- Boxiocns CDN Link / search lang boxicons sa googol -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -95,16 +95,16 @@ include_once('../components/config.php');
             <!--profile-->
             <?php
 
-if (isset($_SESSION['userid'])) {
-    $id = $_SESSION['userid'];
-    $sql = "SELECT * FROM user WHERE userid = '$id'";
-    $result = $conn->query($sql);
-    while ($row = $result->fetch_assoc()) {
-        $img_filename = $row['img'];
-        $first_name = $row['first_name'];
-        $last_name = $row['last_name'];
+            if (isset($_SESSION['userid'])) {
+                $id = $_SESSION['userid'];
+                $sql = "SELECT * FROM user WHERE userid = '$id'";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    $img_filename = $row['img'];
+                    $first_name = $row['first_name'];
+                    $last_name = $row['last_name'];
 
-        echo "
+                    echo "
         <li>
             <a href='profile.php'>
                 <i class='bx bx-user'></i>
@@ -128,9 +128,9 @@ if (isset($_SESSION['userid'])) {
             </div>
         </li>
     </ul>";
-    }
-}
-?>
+                }
+            }
+            ?>
     </div>
 
 
@@ -142,7 +142,7 @@ if (isset($_SESSION['userid'])) {
 
 
 
-    
+
 
 
     <!--home-->
@@ -153,46 +153,43 @@ if (isset($_SESSION['userid'])) {
         </div>
         <div class='containers'>
             <!--3 white container-->
-            
-            
+
+
             <?php
-if (isset($_SESSION['userid'])) {
-    $id = $_SESSION['userid'];
-    $sql = "SELECT * from user where userid = '$id'";
-    $result = $conn->query($sql);
-    while ($row = $result->fetch_assoc()) {
-        $current_balance = $row['balance'];
-?>
+            if (isset($_SESSION['userid'])) {
+                $id = $_SESSION['userid'];
+                $sql = "SELECT * from user where userid = '$id'";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                    $current_balance = $row['balance'];
+            ?>
 
-<div class='container-1' id="balance-container">
-    <h1>Balance</h1>
-    <label>PHP <?php echo $current_balance; ?></label>
-</div>
+                    <div class='container-1' id="balance-container">
+                        <h1>Balance</h1>
+                        <label>PHP <?php echo $current_balance; ?></label>
+                    </div>
 
-<div id="id01" class="modal">
-    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                    <div id="id01" class="modal">
+                        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
 
-    <!-- modal content -->
-    <form class="modal-content" action="update-balance.php" method="post">
-        <div class="container">
-            <h1>Edit balance</h1>
-            <hr>
-            <label for="bud">
-                <b>Enter Balance</b>
-            </label>
-            <input type="number" placeholder="0PHP" name="budget" value="<?php echo $current_balance; ?>" required>
+                        <!-- modal content -->
+                        <form class="modal-content" action="update-balance.php" method="post">
+                            <div class="container">
+                                <h1>Balance</h1>
+                                <hr>
+                                <input type="number" placeholder="0PHP" name="budget" value="PHP 0" required>
 
-            <div class="clearfix">
-                <button type="submit" name="submit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Budget</b></button>
-            </div>
-        </div>
-    </form>
-</div>
+                                <div class="clearfix">
+                                    <button type="submit" name="submit" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn"><b>Add Balance</b></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
-<?php
-    }
-}
-?>
+            <?php
+                }
+            }
+            ?>
 
 
 
@@ -223,39 +220,64 @@ if (isset($_SESSION['userid'])) {
                                       </div>";
             }
 
-            $query = "SELECT SUM(budget) AS total_budget FROM budget WHERE userid =".$_SESSION['userid']." AND budget_status = '' ";
+
+
+
+
+
+
+
+            // Retrieve the total budget for the current user
+            $query = "SELECT SUM(budget) AS total_budget FROM budget WHERE userid =" . $_SESSION['userid'] . " AND budget_status = ''";
             $result = mysqli_query($conn, $query);
             $budget = mysqli_fetch_assoc($result);
-            
+
+            // Retrieve the total expenses for the selected budget
+            $query = "SELECT SUM(xamount) AS total_expenses FROM expenses WHERE userid =" . $_SESSION['userid'] . " AND status = 'PAID'";
+            $result = mysqli_query($conn, $query);
+            $expenses = mysqli_fetch_assoc($result);
+
+            // Calculate the remaining budget by deducting the total expenses from the total budget
+            $remaining_budget = $budget['total_budget'] - $expenses['total_expenses'];
+
             echo "<div class='container-3'>
                     <h1>Total Budget Remaining</h1>";
-            echo "<label style='color: #17CF26;'>PHP " . $budget['total_budget'] . "</label>";
+            echo "<label style='color: #17CF26;'>PHP " . $remaining_budget . "</label>";
             echo "</div>";
             ?>
+            ?>
+
+
+
+
+
+
+
+
         </div>
     </section>
 
     </section>
     <script src="../scripts/nav.js"></script>
     <script>
-    // Get the modal
-    var modal = document.getElementById('id01');
+        // Get the modal
+        var modal = document.getElementById('id01');
 
-    // Get the balance container
-    var balanceContainer = document.getElementById('balance-container');
+        // Get the balance container
+        var balanceContainer = document.getElementById('balance-container');
 
-    // When the balance container is clicked, display the modal
-    balanceContainer.onclick = function() {
-        modal.style.display = "block";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
+        // When the balance container is clicked, display the modal
+        balanceContainer.onclick = function() {
+            modal.style.display = "block";
         }
-    }
-</script>
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 
 </html>

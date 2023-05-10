@@ -1,6 +1,10 @@
+
+
 <?php
+// Check if email or username already exists
 include_once('../components/config.php');
 // Function to generate OTP
+
 // If form is submitted
 if(isset($_POST['signup'])) {
   // Get values from form
@@ -9,14 +13,29 @@ if(isset($_POST['signup'])) {
   $email = $_POST['email'];
   $username = $_POST['username'];
   $password = $_POST['password'];
-  
-  // Insert user data into database
-  $query = "INSERT INTO user (first_name, last_name, email, username, password) VALUES ('$first_name', '$last_name', '$email', '$username', '$password')";
-  $result = mysqli_query($conn, $query);
-  
-  // Redirect to login page
-  header('Location: login.php');
-  exit;
+
+  // Check if email or username already exists
+  $email_exists_query = "SELECT * FROM user WHERE email='$email'";
+  $username_exists_query = "SELECT * FROM user WHERE username='$username'";
+
+  $email_exists_result = mysqli_query($conn, $email_exists_query);
+  $username_exists_result = mysqli_query($conn, $username_exists_query);
+
+  if(mysqli_num_rows($email_exists_result) > 0) {
+    // Email already exists
+    echo "<script>alert('Email already exists');</script>";
+  } else if(mysqli_num_rows($username_exists_result) > 0) {
+    // Username already exists
+    echo "<script>alert('Username already exists');</script>";
+  } else {
+    // Insert user data into database
+    $query = "INSERT INTO user (first_name, last_name, email, username, password) VALUES ('$first_name', '$last_name', '$email', '$username', '$password')";
+    $result = mysqli_query($conn, $query);
+
+    // Redirect to login page
+    header('Location: login.php');
+    exit;
+  }
 }
 ?>
 <!doctype html>

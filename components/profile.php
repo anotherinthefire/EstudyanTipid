@@ -174,20 +174,16 @@ include_once('../components/config.php');
                     // Update the user's profile image in the database
                     $sql = "UPDATE user SET img='$target_file' WHERE userid=$user_id";
                     if (mysqli_query($conn, $sql)) {
-                        $success_msg = "Profile image updated successfully.";
-                    echo "<script>window.alert('$success_msg');</script>";
+                    echo "<script>window.alert('Profile image updated successfully.');</script>";
                     } else {
-                        $error_msg = "Error updating profile image: " . mysqli_error($conn);
-                        echo "<script>window.alert('$error_msg');</script>";
+                        echo "<script>window.alert('Error updating profile image: ' . mysqli_error($conn););</script>";
                     }
                 } else {
-                    $error_msg = "Error uploading file.";
-                    echo "<script>window.alert('$error_msg');</script>";
+                    echo "<script>window.alert('Error uploading file.');</script>";
                 }
               }
                 } else {
-                    $error_msg = "Please select an image to upload.";
-                    echo "<script>window.alert('$error_msg');</script>";
+                    echo "<script>window.alert('Please select an image to upload.');</script>";
                 }
               }                
 
@@ -199,24 +195,24 @@ include_once('../components/config.php');
             $imgFilename = $row["img"];
 
 
-            if (isset($error_msg)) { ?>
-              <div style="color: red;"><?php echo $error_msg; ?></div>
-            <?php } ?>
-            <?php if (isset($success_msg)) { ?>
-              <div style="color: green;"><?php echo $success_msg; ?></div>
-            <?php } ?>
-            <form method="post" enctype="multipart/form-data">
-              <div class="image-container">
-                <img src="../img/<?php echo $imgFilename; ?>" alt="Profile Image">
-                <div class="overlay">
-                  <label for="image">
-                    <i class="bx bx-camera"></i>
-                    <input id="image" name="image" accept="image/*" type="file" />
+              if (isset($error_msg)) { ?>
+                <div style="color: red;"><?php echo $error_msg; ?></div>
+              <?php } ?>
+              <?php if (isset($success_msg)) { ?>
+                <div style="color: green;"><?php echo $success_msg; ?></div>
+              <?php } ?>
+              <form method="post" enctype="multipart/form-data">
+                <div class="image-container">
+                  <img src="../img/<?php echo $imgFilename; ?>" alt="Profile Image">
+                  <div class="overlay">
+                    <label for="image">
+                      <i class="bx bx-camera"></i>
+                      <input id="image" name="image" accept="image/*" type="file" />
 
-                  </label>
+                    </label>
+                  </div>
+
                 </div>
-
-              </div>
               <input type="submit" name="profile" value="change" style="width:50%; ">
             </form>
           </th>

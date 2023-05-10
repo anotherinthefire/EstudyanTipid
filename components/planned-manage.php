@@ -148,8 +148,9 @@ if (isset($_SESSION['userid'])) {
     <?php
     $query = "SELECT * FROM expenses WHERE status ='on-going' and userid =" . $_SESSION['userid'] . " ORDER BY exid ASC";
     $result = mysqli_query($conn, $query);
+    $total_budget = 0;
     if (mysqli_num_rows($result) > 0) {
-        $total_budget = 0;
+        
         while ($row = mysqli_fetch_array($result)) {
             if (isset($_SESSION['userid'])) {
                 $total_budget += $row['xamount'];
@@ -233,10 +234,14 @@ if (isset($_SESSION['userid'])) {
                 
     <?php
             }
-        }
+        }?>
+        
+
+        
+        <?php
     }
     ?>
-    <div class='budget-details'>
+            <div class='budget-details'>
         <table style='width:100%'>
             <tr>
                 <th style='text-align: left; font-weight: normal;'>Total Price</th>
@@ -248,10 +253,6 @@ if (isset($_SESSION['userid'])) {
                     {
                          echo (0);                       
                     } 
-                    else
-                    {
-                        echo ($total_budget);
-                    }
                     ?>
                 </th>
                 <th></th>
@@ -413,6 +414,13 @@ if (isset($_SESSION['userid'])) {
                 }
             }
             ?>
+
+
+
+
+
+
+
         </div>
     </section>
     <?php
