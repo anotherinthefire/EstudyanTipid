@@ -136,11 +136,6 @@ if (isset($_SESSION['userid'])) {
 }
 ?>
     </div>
-
-
-
-
-
     <!--home-->
     <section class="home-section">
         <div class="home-content">
@@ -148,7 +143,6 @@ if (isset($_SESSION['userid'])) {
             <h1 class="page-title">MANAGE GOALS</h1>
             <br>
             <div class="card">
-
                 <?php
                 $query = "SELECT gid, gtitle, userid, gtamount, gddate, `status`
                   FROM goal                    
@@ -171,6 +165,7 @@ if (isset($_SESSION['userid'])) {
                             }
                         }
                 ?>
+                
                         <div class="budget-details">
                             <table style="width:100%">
                                 <tr>
